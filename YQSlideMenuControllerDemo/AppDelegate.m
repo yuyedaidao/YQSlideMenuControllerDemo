@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "YQSlideMenuController.h"
 
 @interface AppDelegate ()
 
@@ -17,7 +18,23 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    
+    UIViewController *contentViewController = [[UIViewController alloc] init];
+    contentViewController.view.backgroundColor = [UIColor whiteColor];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:contentViewController];
+    UITableViewController *leftMenuViewController = [[UITableViewController alloc] init];
+    
+    
+    YQSlideMenuController *sideMenuViewController = [[YQSlideMenuController alloc] initWithContentViewController:navigationController
+                                                                    leftMenuViewController:leftMenuViewController];
+//    sideMenuViewController.backgroundImage = [UIImage imageNamed:@"Stars"];
+  
+    self.window.rootViewController = sideMenuViewController;
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
     return YES;
+
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

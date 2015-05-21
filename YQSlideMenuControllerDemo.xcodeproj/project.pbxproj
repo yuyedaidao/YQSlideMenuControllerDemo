@@ -14,6 +14,7 @@
 		21B237061B0CADA400CF8E12 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 21B237051B0CADA400CF8E12 /* Images.xcassets */; };
 		21B237091B0CADA400CF8E12 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 21B237071B0CADA400CF8E12 /* LaunchScreen.xib */; };
 		21B237151B0CADA400CF8E12 /* YQSlideMenuControllerDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 21B237141B0CADA400CF8E12 /* YQSlideMenuControllerDemoTests.m */; };
+		21B237211B0CAE1200CF8E12 /* YQSlideMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21B237201B0CAE1200CF8E12 /* YQSlideMenuController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,8 @@
 		21B2370E1B0CADA400CF8E12 /* YQSlideMenuControllerDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YQSlideMenuControllerDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		21B237131B0CADA400CF8E12 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		21B237141B0CADA400CF8E12 /* YQSlideMenuControllerDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YQSlideMenuControllerDemoTests.m; sourceTree = "<group>"; };
+		21B2371F1B0CAE1200CF8E12 /* YQSlideMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YQSlideMenuController.h; sourceTree = "<group>"; };
+		21B237201B0CAE1200CF8E12 /* YQSlideMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YQSlideMenuController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +84,7 @@
 		21B236F71B0CADA400CF8E12 /* YQSlideMenuControllerDemo */ = {
 			isa = PBXGroup;
 			children = (
+				21B2371E1B0CADE100CF8E12 /* YQSlideMenuController */,
 				21B236FC1B0CADA400CF8E12 /* AppDelegate.h */,
 				21B236FD1B0CADA400CF8E12 /* AppDelegate.m */,
 				21B236FF1B0CADA400CF8E12 /* ViewController.h */,
@@ -117,6 +121,15 @@
 				21B237131B0CADA400CF8E12 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		21B2371E1B0CADE100CF8E12 /* YQSlideMenuController */ = {
+			isa = PBXGroup;
+			children = (
+				21B2371F1B0CAE1200CF8E12 /* YQSlideMenuController.h */,
+				21B237201B0CAE1200CF8E12 /* YQSlideMenuController.m */,
+			);
+			path = YQSlideMenuController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -219,6 +232,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				21B237211B0CAE1200CF8E12 /* YQSlideMenuController.m in Sources */,
 				21B237011B0CADA400CF8E12 /* ViewController.m in Sources */,
 				21B236FE1B0CADA400CF8E12 /* AppDelegate.m in Sources */,
 				21B236FB1B0CADA400CF8E12 /* main.m in Sources */,
