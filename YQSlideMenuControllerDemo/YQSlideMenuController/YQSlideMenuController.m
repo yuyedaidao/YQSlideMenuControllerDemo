@@ -8,8 +8,10 @@
 
 #import "YQSlideMenuController.h"
 
-static CGFloat const LeftMarginGesture = 30.0f;
+static CGFloat const LeftMarginGesture = 40.0f;
 static CGFloat const MinScaleContentView = 0.8f;
+static CGFloat const MoveDistanceMenuView = 100.0f;
+static CGFloat const MinScaleMenuView = 0.8f;
 static double const DurationAnimation = 0.3f;
 @interface YQSlideMenuController ()<UIGestureRecognizerDelegate>
 @property (nonatomic, strong) UIView *menuViewContainer;
@@ -44,7 +46,6 @@ static double const DurationAnimation = 0.3f;
 - (void)prepare{
     _menuViewContainer = [[UIView alloc] init];
     _contentViewContainer = [[UIView alloc] init];
-    
     _contentViewShadowColor = [UIColor blackColor];
     _contentViewShadowOffset = CGSizeZero;
     _contentViewShadowOpacity = 0.4f;
@@ -56,6 +57,7 @@ static double const DurationAnimation = 0.3f;
 - (void)awakeFromNib{
     
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -74,9 +76,12 @@ static double const DurationAnimation = 0.3f;
     self.menuViewContainer.frame = self.view.bounds;
     self.contentViewContainer.frame = self.view.bounds;
     
+    self.menuViewContainer.backgroundColor = [UIColor clearColor];
+    
     if (self.leftMenuViewController) {
         [self addChildViewController:self.leftMenuViewController];
         self.leftMenuViewController.view.frame = self.view.bounds;
+        self.leftMenuViewController.view.backgroundColor = [UIColor clearColor];
         self.leftMenuViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [self.menuViewContainer addSubview:self.leftMenuViewController.view];
         [self.leftMenuViewController didMoveToParentViewController:self];
@@ -99,38 +104,94 @@ static double const DurationAnimation = 0.3f;
     [self updateContentViewShadow];
     
 }
+
+- (void)showViewController:(UIViewController *)viewController{
+    NSAssert([self.contentViewController isKindOfClass:[UINavigationController class]], @"住内容视图控制器不是UINavigationController");
+    
+    [((UINavigationController *)self.contentViewController) pushViewController:viewController animated:NO];
+    [self hideMenu];
+}
+- (void)hideMenu{
+    if(!self.menuHidden){
+        [self showMenu:NO];
+    }
+}
+- (void)showMenu{
+    if(self.menuHidden){
+        [self showMenu:YES];
+    }
+}
+#pragma method overwrite
+- (void)setBackgroundImage:(UIImage *)backgroundImage{
+    if(_backgroundImage != backgroundImage){
+        _backgroundImage = backgroundImage;
+        self.backgroundImageView.image = backgroundImage;
+    }
+}
+
+#pragma custom selector
 - (void)panGestureRecognizer:(UIScreenEdgePanGestureRecognizer *)recognizer{
     
     CGPoint point = [recognizer translationInView:self.view];
     
     if (recognizer.state == UIGestureRecognizerStateBegan) {
         [self updateContentViewShadow];
-
     }else if(recognizer.state == UIGestureRecognizerStateChanged){
-
         CGFloat menuVisibleWidth = self.view.bounds.size.width-self.realContentViewVisibleWidth;
         CGFloat delta = self.menuHidden ? point.x/menuVisibleWidth : (menuVisibleWidth+point.x)/menuVisibleWidth;
+//        delta = MIN(delta, 1);//这样的话可以保持delta始终小余1，可以在缩放到了最小后一直执行B模块，使内容视图可以继续移动
+
         CGFloat scale = 1-(1-MinScaleContentView)*delta;
+        CGFloat menuScale = MinScaleMenuView + (1-MinScaleMenuView)*delta;
         if(self.menuHidden){
-            if(scale < MinScaleContentView){
+            //以内容视图最小缩放为界限
+            if(scale < MinScaleContentView){//A
                 self.contentViewContainer.transform = CGAffineTransformMakeTranslation(menuVisibleWidth, 0);
                 self.contentViewContainer.transform = CGAffineTransformScale(self.contentViewContainer.transform,MinScaleContentView,MinScaleContentView);
                 self.contentViewScale = MinScaleContentView;
-            }else{
-                self.contentViewContainer.transform = CGAffineTransformMakeTranslation(point.x, 0);
-                self.contentViewContainer.transform = CGAffineTransformScale(self.contentViewContainer.transform,scale, scale);
-                self.contentViewScale = scale;
-            }
+                self.menuViewContainer.transform = CGAffineTransformMakeScale(1, 1);
+                self.menuViewContainer.transform = CGAffineTransformTranslate(self.menuViewContainer.transform, 0, 0);
+                
+            }else{//大于最小界限又分大于等于1和小于1两种情况
+               
+                if(scale < 1){//B
+                    self.contentViewContainer.transform = CGAffineTransformMakeTranslation(point.x, 0);
+                    self.contentViewContainer.transform = CGAffineTransformScale(self.contentViewContainer.transform,scale, scale);
+                    self.contentViewScale = scale;
+                    self.menuViewContainer.transform = CGAffineTransformMakeScale(menuScale, menuScale);
+                    self.menuViewContainer.transform = CGAffineTransformTranslate(self.menuViewContainer.transform, -MoveDistanceMenuView *(1-delta), 0);
+                }else{//C
+                    self.contentViewContainer.transform = CGAffineTransformMakeTranslation(0, 0);
+                    self.contentViewContainer.transform = CGAffineTransformScale(self.contentViewContainer.transform,1, 1);
+                    self.contentViewScale = 1;
+                    self.menuViewContainer.transform = CGAffineTransformMakeScale(MinScaleMenuView, MinScaleMenuView);
+                    self.menuViewContainer.transform = CGAffineTransformTranslate(self.menuViewContainer.transform, -MoveDistanceMenuView, 0);
+                }
 
+            }
+            
         }else{
-            if(scale > 1){
+            
+            if(scale > 1){//D
                 self.contentViewContainer.transform = CGAffineTransformMakeTranslation(0, 0);
                 self.contentViewContainer.transform = CGAffineTransformScale(self.contentViewContainer.transform,1,1);
                 self.contentViewScale = 1;
+                self.menuViewContainer.transform = CGAffineTransformMakeScale(MinScaleMenuView, MinScaleMenuView);
+                self.menuViewContainer.transform = CGAffineTransformTranslate(self.menuViewContainer.transform, -MoveDistanceMenuView, 0);
             }else{
-                self.contentViewContainer.transform = CGAffineTransformMakeTranslation(point.x+menuVisibleWidth, 0);
-                self.contentViewContainer.transform = CGAffineTransformScale(self.contentViewContainer.transform,scale, scale);
-                self.contentViewScale = scale;
+                if(scale>MinScaleContentView){//E
+                    self.contentViewContainer.transform = CGAffineTransformMakeTranslation(point.x+menuVisibleWidth, 0);
+                    self.contentViewContainer.transform = CGAffineTransformScale(self.contentViewContainer.transform,scale, scale);
+                    self.contentViewScale = scale;
+                    self.menuViewContainer.transform = CGAffineTransformMakeScale(menuScale, menuScale);
+                    self.menuViewContainer.transform = CGAffineTransformTranslate(self.menuViewContainer.transform, -MoveDistanceMenuView * (1-delta), 0);
+                }else{//F
+                    self.contentViewContainer.transform =CGAffineTransformMakeTranslation(self.view.bounds.size.width-self.realContentViewVisibleWidth, 0);
+                    self.contentViewContainer.transform = CGAffineTransformScale(self.contentViewContainer.transform,MinScaleContentView, MinScaleContentView);
+                    self.contentViewScale = MinScaleContentView;
+                    self.menuViewContainer.transform = CGAffineTransformMakeScale(1, 1);
+                    self.menuViewContainer.transform = CGAffineTransformTranslate(self.menuViewContainer.transform, 0, 0);
+                }
             }
         }
         
@@ -139,21 +200,26 @@ static double const DurationAnimation = 0.3f;
     }
 }
 - (void)showMenu:(BOOL)show{
-    NSTimeInterval duration = (self.contentViewScale-MinScaleContentView)/(1-MinScaleContentView)*DurationAnimation;
+    NSTimeInterval duration  = show ? (self.contentViewScale-MinScaleContentView)/(1-MinScaleContentView)*DurationAnimation : (1 - (self.contentViewScale-MinScaleContentView)/(1-MinScaleContentView))*DurationAnimation;
+    
     [UIView animateWithDuration:duration animations:^{
         if(show){
             self.contentViewContainer.transform = CGAffineTransformMakeTranslation(self.view.bounds.size.width-self.realContentViewVisibleWidth, 0);
             self.contentViewContainer.transform = CGAffineTransformScale(self.contentViewContainer.transform,MinScaleContentView, MinScaleContentView);
-            self.contentViewScale = MinScaleContentView;
+            self.menuViewContainer.transform = CGAffineTransformIdentity;
         }else{
-            self.contentViewContainer.transform = CGAffineTransformMakeTranslation(0, 0);
-            self.contentViewContainer.transform = CGAffineTransformScale(self.contentViewContainer.transform,1, 1);
+
+            self.contentViewContainer.transform = CGAffineTransformIdentity;
             self.contentViewScale = 1;
+            self.menuViewContainer.transform = CGAffineTransformMakeScale(MinScaleMenuView, MinScaleMenuView);
+            self.menuViewContainer.transform = CGAffineTransformTranslate(self.menuViewContainer.transform, -MoveDistanceMenuView, 0);
         }
     } completion:^(BOOL finished) {
         self.menuHidden = !show;
     }];
 }
+
+#pragma method assist
 - (void)updateContentViewShadow
 {
    

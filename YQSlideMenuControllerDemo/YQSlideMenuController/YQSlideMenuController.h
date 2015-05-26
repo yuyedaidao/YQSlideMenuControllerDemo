@@ -22,4 +22,7 @@
 - (id)initWithContentViewController:(UIViewController *)contentViewController
              leftMenuViewController:(UIViewController *)leftMenuViewController;
 
+- (void)showViewController:(UIViewController *)viewController;
+- (void)hideMenu;
+- (void)showMenu;
 @end
