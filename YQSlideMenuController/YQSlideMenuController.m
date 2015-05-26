@@ -8,7 +8,7 @@
 
 #import "YQSlideMenuController.h"
 
-static CGFloat const LeftMarginGesture = 40.0f;
+static CGFloat const LeftMarginGesture = 35.0f;
 static CGFloat const MinScaleContentView = 0.8f;
 static CGFloat const MoveDistanceMenuView = 100.0f;
 static CGFloat const MinScaleMenuView = 0.8f;
