@@ -28,7 +28,7 @@ Pod::Spec.new do |s|
                    * Finally, don't worry about the indent, CocoaPods strips it!
                    DESC
 
-  s.homepage     = "http://EXAMPLE/YQSlideMenController"
+  s.homepage     = "https://github.com/yuyedaidao"
   # s.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
 
 
@@ -89,7 +89,7 @@ Pod::Spec.new do |s|
   #  Not including the public_header_files will make all headers public.
   #
 
-  s.source_files  = "YQSlideMenuController/*.{h,m}"
+  s.source_files  = "YQSlideMenuControllerDemo/YQSlideMenuController/*.{h,m}"
   # s.exclude_files = "Classes/Exclude"
 
   # s.public_header_files = "Classes/**/*.h"
@@ -104,7 +104,7 @@ Pod::Spec.new do |s|
   #
 
   # s.resource  = "icon.png"
-  s.resources = "YQSlideMenuController/*.xcassets"
+  s.resources = "YQSlideMenuControllerDemo/YQSlideMenuController/*.xcassets"
 
   # s.preserve_paths = "FilesToSave", "MoreFilesToSave"
 
