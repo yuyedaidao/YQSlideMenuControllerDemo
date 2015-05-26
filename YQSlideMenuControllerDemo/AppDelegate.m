@@ -24,16 +24,13 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     MainViewController *contentViewController = [[MainViewController alloc] initWithNibName:@"MainViewController" bundle:nil];
-
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:contentViewController];
     LeftMenuController  *leftMenuViewController = [[LeftMenuController alloc] init];
-    
-    
-    YQSlideMenuController *sideMenuViewController = [[YQSlideMenuController alloc] initWithContentViewController:navigationController
+    YQSlideMenuController *sideMenuController = [[YQSlideMenuController alloc] initWithContentViewController:navigationController
                                                                     leftMenuViewController:leftMenuViewController];
-    sideMenuViewController.backgroundImage = [UIImage imageNamed:@"slide_bg"];
+    sideMenuController.backgroundImage = [UIImage imageNamed:@"slide_bg"];
   
-    self.window.rootViewController = sideMenuViewController;
+    self.window.rootViewController = sideMenuController;
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
