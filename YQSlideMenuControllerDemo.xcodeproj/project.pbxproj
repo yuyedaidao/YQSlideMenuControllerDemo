@@ -91,6 +91,7 @@
 		21B236EC1B0CADA400CF8E12 = {
 			isa = PBXGroup;
 			children = (
+				21B2371E1B0CADE100CF8E12 /* YQSlideMenuController */,
 				21B236F71B0CADA400CF8E12 /* YQSlideMenuControllerDemo */,
 				21B237111B0CADA400CF8E12 /* YQSlideMenuControllerDemoTests */,
 				21B236F61B0CADA400CF8E12 /* Products */,
@@ -109,7 +110,6 @@
 		21B236F71B0CADA400CF8E12 /* YQSlideMenuControllerDemo */ = {
 			isa = PBXGroup;
 			children = (
-				21B2371E1B0CADE100CF8E12 /* YQSlideMenuController */,
 				21B236FC1B0CADA400CF8E12 /* AppDelegate.h */,
 				21B236FD1B0CADA400CF8E12 /* AppDelegate.m */,
 				21B236FF1B0CADA400CF8E12 /* ViewController.h */,
@@ -169,7 +169,8 @@
 				21ED40581B146785008400D2 /* UIViewController+YQSlideMenu.h */,
 				21ED40591B146785008400D2 /* UIViewController+YQSlideMenu.m */,
 			);
-			path = YQSlideMenuController;
+			name = YQSlideMenuController;
+			path = YQSlideMenuControllerDemo/YQSlideMenuController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
