@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2170A3A21B14897100CCDBE0 /* UIViewController+YQSlideMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 2170A39E1B14897100CCDBE0 /* UIViewController+YQSlideMenu.m */; };
+		2170A3A31B14897100CCDBE0 /* YQSlideMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2170A3A01B14897100CCDBE0 /* YQSlideMenuController.m */; };
+		2170A3A41B14897100CCDBE0 /* YQSlideMenuImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2170A3A11B14897100CCDBE0 /* YQSlideMenuImages.xcassets */; };
 		21B236FB1B0CADA400CF8E12 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 21B236FA1B0CADA400CF8E12 /* main.m */; };
 		21B236FE1B0CADA400CF8E12 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 21B236FD1B0CADA400CF8E12 /* AppDelegate.m */; };
 		21B237011B0CADA400CF8E12 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21B237001B0CADA400CF8E12 /* ViewController.m */; };
@@ -14,17 +17,14 @@
 		21B237061B0CADA400CF8E12 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 21B237051B0CADA400CF8E12 /* Images.xcassets */; };
 		21B237091B0CADA400CF8E12 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 21B237071B0CADA400CF8E12 /* LaunchScreen.xib */; };
 		21B237151B0CADA400CF8E12 /* YQSlideMenuControllerDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 21B237141B0CADA400CF8E12 /* YQSlideMenuControllerDemoTests.m */; };
-		21B237211B0CAE1200CF8E12 /* YQSlideMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21B237201B0CAE1200CF8E12 /* YQSlideMenuController.m */; };
 		21ED403B1B1457B1008400D2 /* LeftMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21ED40391B1457B1008400D2 /* LeftMenuController.m */; };
 		21ED403C1B1457B1008400D2 /* LeftMenuController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 21ED403A1B1457B1008400D2 /* LeftMenuController.xib */; };
-		21ED40401B145E03008400D2 /* YQSlideMenuImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 21ED403F1B145E03008400D2 /* YQSlideMenuImages.xcassets */; };
 		21ED404C1B145EA8008400D2 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21ED404A1B145EA8008400D2 /* MainViewController.m */; };
 		21ED404D1B145EA8008400D2 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 21ED404B1B145EA8008400D2 /* MainViewController.xib */; };
 		21ED40511B146189008400D2 /* OneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21ED404F1B146189008400D2 /* OneViewController.m */; };
 		21ED40521B146189008400D2 /* OneViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 21ED40501B146189008400D2 /* OneViewController.xib */; };
 		21ED40561B146678008400D2 /* TwoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21ED40541B146678008400D2 /* TwoViewController.m */; };
 		21ED40571B146678008400D2 /* TwoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 21ED40551B146678008400D2 /* TwoViewController.xib */; };
-		21ED405A1B146785008400D2 /* UIViewController+YQSlideMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 21ED40591B146785008400D2 /* UIViewController+YQSlideMenu.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +38,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2170A39D1B14897100CCDBE0 /* UIViewController+YQSlideMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+YQSlideMenu.h"; sourceTree = "<group>"; };
+		2170A39E1B14897100CCDBE0 /* UIViewController+YQSlideMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+YQSlideMenu.m"; sourceTree = "<group>"; };
+		2170A39F1B14897100CCDBE0 /* YQSlideMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YQSlideMenuController.h; sourceTree = "<group>"; };
+		2170A3A01B14897100CCDBE0 /* YQSlideMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YQSlideMenuController.m; sourceTree = "<group>"; };
+		2170A3A11B14897100CCDBE0 /* YQSlideMenuImages.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = YQSlideMenuImages.xcassets; sourceTree = "<group>"; };
 		21B236F51B0CADA400CF8E12 /* YQSlideMenuControllerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YQSlideMenuControllerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		21B236F91B0CADA400CF8E12 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		21B236FA1B0CADA400CF8E12 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -51,12 +56,9 @@
 		21B2370E1B0CADA400CF8E12 /* YQSlideMenuControllerDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YQSlideMenuControllerDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		21B237131B0CADA400CF8E12 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		21B237141B0CADA400CF8E12 /* YQSlideMenuControllerDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YQSlideMenuControllerDemoTests.m; sourceTree = "<group>"; };
-		21B2371F1B0CAE1200CF8E12 /* YQSlideMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YQSlideMenuController.h; sourceTree = "<group>"; };
-		21B237201B0CAE1200CF8E12 /* YQSlideMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YQSlideMenuController.m; sourceTree = "<group>"; };
 		21ED40381B1457B1008400D2 /* LeftMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftMenuController.h; sourceTree = "<group>"; };
 		21ED40391B1457B1008400D2 /* LeftMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftMenuController.m; sourceTree = "<group>"; };
 		21ED403A1B1457B1008400D2 /* LeftMenuController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LeftMenuController.xib; sourceTree = "<group>"; };
-		21ED403F1B145E03008400D2 /* YQSlideMenuImages.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = YQSlideMenuImages.xcassets; sourceTree = "<group>"; };
 		21ED40491B145EA8008400D2 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		21ED404A1B145EA8008400D2 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		21ED404B1B145EA8008400D2 /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
@@ -66,8 +68,6 @@
 		21ED40531B146678008400D2 /* TwoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwoViewController.h; sourceTree = "<group>"; };
 		21ED40541B146678008400D2 /* TwoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwoViewController.m; sourceTree = "<group>"; };
 		21ED40551B146678008400D2 /* TwoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TwoViewController.xib; sourceTree = "<group>"; };
-		21ED40581B146785008400D2 /* UIViewController+YQSlideMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+YQSlideMenu.h"; sourceTree = "<group>"; };
-		21ED40591B146785008400D2 /* UIViewController+YQSlideMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+YQSlideMenu.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,10 +88,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2170A39C1B14897100CCDBE0 /* YQSlideMenuController */ = {
+			isa = PBXGroup;
+			children = (
+				2170A39D1B14897100CCDBE0 /* UIViewController+YQSlideMenu.h */,
+				2170A39E1B14897100CCDBE0 /* UIViewController+YQSlideMenu.m */,
+				2170A39F1B14897100CCDBE0 /* YQSlideMenuController.h */,
+				2170A3A01B14897100CCDBE0 /* YQSlideMenuController.m */,
+				2170A3A11B14897100CCDBE0 /* YQSlideMenuImages.xcassets */,
+			);
+			path = YQSlideMenuController;
+			sourceTree = "<group>";
+		};
 		21B236EC1B0CADA400CF8E12 = {
 			isa = PBXGroup;
 			children = (
-				21B2371E1B0CADE100CF8E12 /* YQSlideMenuController */,
+				2170A39C1B14897100CCDBE0 /* YQSlideMenuController */,
 				21B236F71B0CADA400CF8E12 /* YQSlideMenuControllerDemo */,
 				21B237111B0CADA400CF8E12 /* YQSlideMenuControllerDemoTests */,
 				21B236F61B0CADA400CF8E12 /* Products */,
@@ -158,19 +170,6 @@
 				21B237131B0CADA400CF8E12 /* Info.plist */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		21B2371E1B0CADE100CF8E12 /* YQSlideMenuController */ = {
-			isa = PBXGroup;
-			children = (
-				21B2371F1B0CAE1200CF8E12 /* YQSlideMenuController.h */,
-				21B237201B0CAE1200CF8E12 /* YQSlideMenuController.m */,
-				21ED403F1B145E03008400D2 /* YQSlideMenuImages.xcassets */,
-				21ED40581B146785008400D2 /* UIViewController+YQSlideMenu.h */,
-				21ED40591B146785008400D2 /* UIViewController+YQSlideMenu.m */,
-			);
-			name = YQSlideMenuController;
-			path = YQSlideMenuControllerDemo/YQSlideMenuController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -253,11 +252,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				21ED40401B145E03008400D2 /* YQSlideMenuImages.xcassets in Resources */,
 				21B237041B0CADA400CF8E12 /* Main.storyboard in Resources */,
 				21B237091B0CADA400CF8E12 /* LaunchScreen.xib in Resources */,
 				21B237061B0CADA400CF8E12 /* Images.xcassets in Resources */,
 				21ED404D1B145EA8008400D2 /* MainViewController.xib in Resources */,
+				2170A3A41B14897100CCDBE0 /* YQSlideMenuImages.xcassets in Resources */,
 				21ED40521B146189008400D2 /* OneViewController.xib in Resources */,
 				21ED403C1B1457B1008400D2 /* LeftMenuController.xib in Resources */,
 				21ED40571B146678008400D2 /* TwoViewController.xib in Resources */,
@@ -278,13 +277,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				21B237211B0CAE1200CF8E12 /* YQSlideMenuController.m in Sources */,
 				21ED403B1B1457B1008400D2 /* LeftMenuController.m in Sources */,
+				2170A3A21B14897100CCDBE0 /* UIViewController+YQSlideMenu.m in Sources */,
 				21B237011B0CADA400CF8E12 /* ViewController.m in Sources */,
 				21ED404C1B145EA8008400D2 /* MainViewController.m in Sources */,
-				21ED405A1B146785008400D2 /* UIViewController+YQSlideMenu.m in Sources */,
 				21B236FE1B0CADA400CF8E12 /* AppDelegate.m in Sources */,
 				21ED40511B146189008400D2 /* OneViewController.m in Sources */,
+				2170A3A31B14897100CCDBE0 /* YQSlideMenuController.m in Sources */,
 				21B236FB1B0CADA400CF8E12 /* main.m in Sources */,
 				21ED40561B146678008400D2 /* TwoViewController.m in Sources */,
 			);
