@@ -23,7 +23,7 @@
 ####菜单中显示新视图
     [self.slideMenuController showViewController:viewController];
     
-**还有许多功能没有完善，有需求的客观烦请告之**
+**还有许多功能没有完善，有需求的客观烦请告知**
       
 
 
