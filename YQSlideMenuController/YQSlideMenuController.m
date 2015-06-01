@@ -17,7 +17,7 @@ static double const DurationAnimation = 0.3f;
 @property (nonatomic, strong) UIView *menuViewContainer;
 @property (nonatomic, strong) UIView *contentViewContainer;
 @property (nonatomic, strong) UIImageView *backgroundImageView;
-
+@property (nonatomic, strong) UIView *gestureRecognizerView;
 @property (strong, readwrite, nonatomic) IBInspectable UIColor *contentViewShadowColor;
 @property (assign, readwrite, nonatomic) IBInspectable CGSize contentViewShadowOffset;
 @property (assign, readwrite, nonatomic) IBInspectable CGFloat contentViewShadowOpacity;
@@ -46,6 +46,8 @@ static double const DurationAnimation = 0.3f;
 - (void)prepare{
     _menuViewContainer = [[UIView alloc] init];
     _contentViewContainer = [[UIView alloc] init];
+    _gestureRecognizerView = [[UIView alloc] init];
+    _gestureRecognizerView.backgroundColor = [UIColor clearColor];
     _contentViewShadowColor = [UIColor blackColor];
     _contentViewShadowOffset = CGSizeZero;
     _contentViewShadowOpacity = 0.4f;
@@ -75,6 +77,7 @@ static double const DurationAnimation = 0.3f;
     
     self.menuViewContainer.frame = self.view.bounds;
     self.contentViewContainer.frame = self.view.bounds;
+    self.gestureRecognizerView.frame = self.view.bounds;
     
     self.menuViewContainer.backgroundColor = [UIColor clearColor];
     
@@ -100,6 +103,12 @@ static double const DurationAnimation = 0.3f;
     UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureRecognizer:)];
     panGesture.delegate = self;
     [self.contentViewContainer addGestureRecognizer:panGesture];
+    
+    
+    [self.contentViewContainer addSubview:self.gestureRecognizerView];
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognizer:)];
+    [self.gestureRecognizerView addGestureRecognizer:tap];
     
     [self updateContentViewShadow];
     
@@ -130,6 +139,13 @@ static double const DurationAnimation = 0.3f;
 }
 
 #pragma custom selector
+
+- (void)tapGestureRecognizer:(UITapGestureRecognizer *)recongnizer{
+    if(!self.menuHidden){
+        [self hideMenu];
+    }
+}
+
 - (void)panGestureRecognizer:(UIScreenEdgePanGestureRecognizer *)recognizer{
     
     CGPoint point = [recognizer translationInView:self.view];
@@ -216,6 +232,7 @@ static double const DurationAnimation = 0.3f;
         }
     } completion:^(BOOL finished) {
         self.menuHidden = !show;
+        self.gestureRecognizerView.hidden = !show;
     }];
 }
 
