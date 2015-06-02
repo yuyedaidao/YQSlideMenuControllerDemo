@@ -8,7 +8,7 @@
 
 #import "YQSlideMenuController.h"
 
-static CGFloat const LeftMarginGesture = 35.0f;
+static CGFloat const LeftMarginGesture = 45.0f;
 static CGFloat const MinScaleContentView = 0.8f;
 static CGFloat const MoveDistanceMenuView = 100.0f;
 static CGFloat const MinScaleMenuView = 0.8f;
@@ -18,6 +18,8 @@ static double const DurationAnimation = 0.3f;
 @property (nonatomic, strong) UIView *contentViewContainer;
 @property (nonatomic, strong) UIImageView *backgroundImageView;
 @property (nonatomic, strong) UIView *gestureRecognizerView;
+@property (nonatomic, strong) UIPanGestureRecognizer *edgePanGesture;
+
 @property (strong, readwrite, nonatomic) IBInspectable UIColor *contentViewShadowColor;
 @property (assign, readwrite, nonatomic) IBInspectable CGSize contentViewShadowOffset;
 @property (assign, readwrite, nonatomic) IBInspectable CGFloat contentViewShadowOpacity;
@@ -100,10 +102,9 @@ static double const DurationAnimation = 0.3f;
     
 //    UIScreenEdgePanGestureRecognizer *panGesture = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureRecognizer:)];
 //    panGesture.edges = UIRectEdgeLeft;
-    UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureRecognizer:)];
-    panGesture.delegate = self;
-    [self.contentViewContainer addGestureRecognizer:panGesture];
-    
+    self.edgePanGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureRecognizer:)];
+    self.edgePanGesture.delegate = self;
+    [self.contentViewContainer addGestureRecognizer:self.edgePanGesture];
     
     [self.contentViewContainer addSubview:self.gestureRecognizerView];
     
@@ -264,6 +265,12 @@ static double const DurationAnimation = 0.3f;
     }
     
     return NO;
+}
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
+    if(gestureRecognizer == self.edgePanGesture){
+        return YES;
+    }
+    return  NO;
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
