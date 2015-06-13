@@ -53,9 +53,9 @@ static double const DurationAnimation = 0.3f;
     _contentViewShadowColor = [UIColor blackColor];
     _contentViewShadowOffset = CGSizeZero;
     _contentViewShadowOpacity = 0.4f;
-    _contentViewShadowRadius = 8.0f;
+    _contentViewShadowRadius = 5.0f;
     _contentViewVisibleWidth = 120.0f;
-    _realContentViewVisibleWidth = _contentViewVisibleWidth/MinScaleContentView;
+//    _realContentViewVisibleWidth = _contentViewVisibleWidth/MinScaleContentView;
     _menuHidden = YES;
 }
 - (void)awakeFromNib{
@@ -64,6 +64,7 @@ static double const DurationAnimation = 0.3f;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.realContentViewVisibleWidth = self.contentViewVisibleWidth/MinScaleContentView;
     // Do any additional setup after loading the view.
     self.backgroundImageView = ({
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
@@ -156,7 +157,6 @@ static double const DurationAnimation = 0.3f;
     }else if(recognizer.state == UIGestureRecognizerStateChanged){
         CGFloat menuVisibleWidth = self.view.bounds.size.width-self.realContentViewVisibleWidth;
         CGFloat delta = self.menuHidden ? point.x/menuVisibleWidth : (menuVisibleWidth+point.x)/menuVisibleWidth;
-//        delta = MIN(delta, 1);//这样的话可以保持delta始终小余1，可以在缩放到了最小后一直执行B模块，使内容视图可以继续移动
 
         CGFloat scale = 1-(1-MinScaleContentView)*delta;
         CGFloat menuScale = MinScaleMenuView + (1-MinScaleMenuView)*delta;
@@ -213,7 +213,8 @@ static double const DurationAnimation = 0.3f;
         }
         
     }else if(recognizer.state == UIGestureRecognizerStateEnded){
-        [self showMenu:(self.contentViewContainer.frame.origin.x > self.view.bounds.size.width/2)];
+//        [self showMenu:(self.contentViewContainer.frame.origin.x > self.view.bounds.size.width/2)];
+        [self showMenu:(self.contentViewScale < 1-(1-MinScaleContentView)/2)];
     }
 }
 - (void)showMenu:(BOOL)show{
