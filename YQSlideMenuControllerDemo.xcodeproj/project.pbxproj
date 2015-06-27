@@ -10,6 +10,7 @@
 		2170A3A21B14897100CCDBE0 /* UIViewController+YQSlideMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 2170A39E1B14897100CCDBE0 /* UIViewController+YQSlideMenu.m */; };
 		2170A3A31B14897100CCDBE0 /* YQSlideMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2170A3A01B14897100CCDBE0 /* YQSlideMenuController.m */; };
 		2170A3A41B14897100CCDBE0 /* YQSlideMenuImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2170A3A11B14897100CCDBE0 /* YQSlideMenuImages.xcassets */; };
+		218475201B3EA38600A10741 /* YQTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2184751F1B3EA38600A10741 /* YQTabBarController.m */; };
 		21B236FB1B0CADA400CF8E12 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 21B236FA1B0CADA400CF8E12 /* main.m */; };
 		21B236FE1B0CADA400CF8E12 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 21B236FD1B0CADA400CF8E12 /* AppDelegate.m */; };
 		21B237011B0CADA400CF8E12 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21B237001B0CADA400CF8E12 /* ViewController.m */; };
@@ -43,6 +44,8 @@
 		2170A39F1B14897100CCDBE0 /* YQSlideMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YQSlideMenuController.h; sourceTree = "<group>"; };
 		2170A3A01B14897100CCDBE0 /* YQSlideMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YQSlideMenuController.m; sourceTree = "<group>"; };
 		2170A3A11B14897100CCDBE0 /* YQSlideMenuImages.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = YQSlideMenuImages.xcassets; sourceTree = "<group>"; };
+		2184751E1B3EA38600A10741 /* YQTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YQTabBarController.h; sourceTree = "<group>"; };
+		2184751F1B3EA38600A10741 /* YQTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YQTabBarController.m; sourceTree = "<group>"; };
 		21B236F51B0CADA400CF8E12 /* YQSlideMenuControllerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YQSlideMenuControllerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		21B236F91B0CADA400CF8E12 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		21B236FA1B0CADA400CF8E12 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -100,9 +103,19 @@
 			path = YQSlideMenuController;
 			sourceTree = "<group>";
 		};
+		2184751D1B3EA35D00A10741 /* YQTabBarController */ = {
+			isa = PBXGroup;
+			children = (
+				2184751E1B3EA38600A10741 /* YQTabBarController.h */,
+				2184751F1B3EA38600A10741 /* YQTabBarController.m */,
+			);
+			path = YQTabBarController;
+			sourceTree = "<group>";
+		};
 		21B236EC1B0CADA400CF8E12 = {
 			isa = PBXGroup;
 			children = (
+				2184751D1B3EA35D00A10741 /* YQTabBarController */,
 				2170A39C1B14897100CCDBE0 /* YQSlideMenuController */,
 				21B236F71B0CADA400CF8E12 /* YQSlideMenuControllerDemo */,
 				21B237111B0CADA400CF8E12 /* YQSlideMenuControllerDemoTests */,
@@ -221,6 +234,7 @@
 				TargetAttributes = {
 					21B236F41B0CADA400CF8E12 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = 683ZJQA2R8;
 					};
 					21B2370D1B0CADA400CF8E12 = {
 						CreatedOnToolsVersion = 6.3.1;
@@ -282,6 +296,7 @@
 				21B237011B0CADA400CF8E12 /* ViewController.m in Sources */,
 				21ED404C1B145EA8008400D2 /* MainViewController.m in Sources */,
 				21B236FE1B0CADA400CF8E12 /* AppDelegate.m in Sources */,
+				218475201B3EA38600A10741 /* YQTabBarController.m in Sources */,
 				21ED40511B146189008400D2 /* OneViewController.m in Sources */,
 				2170A3A31B14897100CCDBE0 /* YQSlideMenuController.m in Sources */,
 				21B236FB1B0CADA400CF8E12 /* main.m in Sources */,
@@ -411,9 +426,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = YQSlideMenuControllerDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -421,9 +439,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = YQSlideMenuControllerDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
