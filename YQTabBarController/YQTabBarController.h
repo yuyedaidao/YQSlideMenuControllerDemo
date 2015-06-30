@@ -10,4 +10,15 @@
 
 @interface YQTabBarController : UIViewController
 
+- (instancetype)initWithViewControllers:(NSArray *)viewControllers;
+/**
+ *  生成有预留位置的TabBarControll实例
+ *
+ *  @param viewControllers viewControllers description
+ *  @param indexs          在这些index位置预留按钮事件，不添加viewController
+ *
+ *  @return return value description
+ */
+- (instancetype)initWithViewControllers:(NSArray *)viewControllers reservedIndexs:(NSArray *)indexs;
+
 @end
