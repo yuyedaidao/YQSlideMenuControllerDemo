@@ -11,6 +11,8 @@
 #import "LeftMenuController.h"
 #import "MainViewController.h"
 #import "OneViewController.h"
+#import "YQTabBarController.h"
+
 
 @interface AppDelegate ()
 
@@ -23,10 +25,17 @@
 
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    MainViewController *contentViewController = [[MainViewController alloc] initWithNibName:@"MainViewController" bundle:nil];
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:contentViewController];
+//    MainViewController *contentViewController = [[MainViewController alloc] initWithNibName:@"MainViewController" bundle:nil];
+    NSMutableArray *viewControllers = [@[] mutableCopy];
+    for (int i = 0; i<4; i++) {
+        UIViewController *vc = [[UIViewController alloc] init];
+        vc.title = [NSString stringWithFormat:@"title %d",i];
+        [viewControllers addObject:[[UINavigationController alloc] initWithRootViewController:vc]];
+    }
+    YQTabBarController *contentViewController   = [[YQTabBarController alloc] initWithViewControllers:viewControllers  reservedIndexs:@[[NSNumber numberWithInteger:2]]];
+//    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:contentViewController];
     LeftMenuController  *leftMenuViewController = [[LeftMenuController alloc] init];
-    YQSlideMenuController *sideMenuController = [[YQSlideMenuController alloc] initWithContentViewController:navigationController
+    YQSlideMenuController *sideMenuController = [[YQSlideMenuController alloc] initWithContentViewController:contentViewController
                                                                     leftMenuViewController:leftMenuViewController];
     sideMenuController.backgroundImage = [UIImage imageNamed:@"slide_bg"];
   

@@ -21,4 +21,9 @@
  */
 - (instancetype)initWithViewControllers:(NSArray *)viewControllers reservedIndexs:(NSArray *)indexs;
 
+//- (void)didClickedItemAtIndex:(NSInteger)index;
+@property (nonatomic ,strong) BOOL (^shouldSeletItemBlock)(NSInteger index);
+@property (nonatomic ,strong) void (^willSeletItemBlock)(NSInteger index);
+@property (nonatomic ,strong) void (^didSeletItemBlock)(NSInteger index);
+
 @end
