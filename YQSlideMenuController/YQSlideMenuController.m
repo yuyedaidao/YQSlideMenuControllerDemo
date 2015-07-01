@@ -254,20 +254,37 @@ static double const DurationAnimation = 0.3f;
 #pragma gesture delegate
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer{
     
-    if(self.contentViewController.childViewControllers.count < 2){//这样只有在根视图控制器上起作用
-        CGPoint point = [gestureRecognizer locationInView:gestureRecognizer.view];
-        if(self.menuHidden){
-            if(point.x <= LeftMarginGesture){
+    if([self.contentViewController isKindOfClass:[UINavigationController class]]){
+        if(self.contentViewController.childViewControllers.count < 2){//这样只有在根视图控制器上起作用
+            CGPoint point = [gestureRecognizer locationInView:gestureRecognizer.view];
+            if(self.menuHidden){
+                if(point.x <= LeftMarginGesture){
+                    return YES;
+                }
+            }else{
                 return YES;
             }
-        }else{
-            return YES;
         }
+    }else{
+        NSLog(@"child %@",self.contentViewController.childViewControllers );
+        if(self.contentViewController.childViewControllers.count){//这样只有在根视图控制器上起作用
+            CGPoint point = [gestureRecognizer locationInView:gestureRecognizer.view];
+            if(self.menuHidden){
+                if(point.x <= LeftMarginGesture){
+                    return YES;
+                }
+            }else{
+                return YES;
+            }
+        }
+
     }
+   
     
     return NO;
 }
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
+    
     if(gestureRecognizer == self.edgePanGesture){
         return YES;
     }

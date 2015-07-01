@@ -14,7 +14,7 @@
 #import "YQTabBarController.h"
 
 
-@interface AppDelegate ()
+@interface AppDelegate ()<YQTabBarViewDelegate>
 
 @end
 
@@ -26,13 +26,16 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
 //    MainViewController *contentViewController = [[MainViewController alloc] initWithNibName:@"MainViewController" bundle:nil];
+   
     NSMutableArray *viewControllers = [@[] mutableCopy];
     for (int i = 0; i<4; i++) {
-        UIViewController *vc = [[UIViewController alloc] init];
+        MainViewController *vc = [[MainViewController alloc] initWithNibName:@"MainViewController" bundle:nil];
         vc.title = [NSString stringWithFormat:@"title %d",i];
         [viewControllers addObject:[[UINavigationController alloc] initWithRootViewController:vc]];
     }
     YQTabBarController *contentViewController   = [[YQTabBarController alloc] initWithViewControllers:viewControllers  reservedIndexs:@[[NSNumber numberWithInteger:2]]];
+    contentViewController.tabBarViewDelegate = self;
+   
 //    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:contentViewController];
     LeftMenuController  *leftMenuViewController = [[LeftMenuController alloc] init];
     YQSlideMenuController *sideMenuController = [[YQSlideMenuController alloc] initWithContentViewController:contentViewController
@@ -44,6 +47,21 @@
     [self.window makeKeyAndVisible];
     return YES;
 
+}
+
+- (CGSize)tabBarView:(YQTabBarView *)tabBarView sizeForItemAtIndex:(NSInteger)index{
+    return CGSizeMake(40, 40);
+};
+- (YQTabBarItem *)tabBarView:(YQTabBarView *)tabBarView itemForIndex:(NSInteger)index{
+
+    YQTabBarItem *item = [[YQTabBarItem alloc] initWithNormalImage:[UIImage imageNamed:@"home_button_words_a"] selectedImage:[UIImage imageNamed:@"home_button_interview_a"] highlightedImage:[UIImage imageNamed:@"home_button_interview_a"]];
+    return item;
+}
+- (BOOL)tabBarView:(YQTabBarView *)tabBarView shouldSelectItemAtIndex:(NSInteger)index{
+    return YES;
+}
+- (void)tabBarView:(YQTabBarView *)tabBarView didSelectItemAtIndex:(NSInteger)index{
+    NSLog(@"did selected Item %d",index);
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

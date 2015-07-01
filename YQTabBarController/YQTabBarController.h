@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "YQTabBarView.h"
 
 @interface YQTabBarController : UIViewController
 
@@ -26,4 +27,5 @@
 @property (nonatomic ,strong) void (^willSeletItemBlock)(NSInteger index);
 @property (nonatomic ,strong) void (^didSeletItemBlock)(NSInteger index);
 
+@property (nonatomic, strong) id<YQTabBarViewDelegate> tabBarViewDelegate;
 @end

@@ -16,7 +16,7 @@ static CGFloat YQTabBarHieght = 50.0f;
 }
 
 @property (strong, nonatomic) UIView *contentViewContainer;
-@property (strong, nonatomic) UIView *tabBarView;
+@property (strong, nonatomic) YQTabBarView *tabBarView;
 @property (strong, nonatomic) NSArray *viewControllers;
 @property (weak, nonatomic) UIViewController *currentViewController;
 @property (assign, nonatomic) NSInteger indexCount;
@@ -65,6 +65,11 @@ static CGFloat YQTabBarHieght = 50.0f;
     
     [self prepareViews];
 
+    __weak typeof(self) weakSlef = self;
+    [self.tabBarView setTabBarItemClickedBlock:^(NSInteger index) {
+        [weakSlef selectViewControllerAtIndex:index];
+    }];
+    
     NSInteger firstVCIndex = 0;
     for (int i = 0; i < self.indexCount; i++) {
         if(indexType[i] >= 0){
@@ -72,6 +77,7 @@ static CGFloat YQTabBarHieght = 50.0f;
             break;
         }
     }
+    
     [self selectViewControllerAtIndex:firstVCIndex];
 }
 
@@ -86,7 +92,12 @@ static CGFloat YQTabBarHieght = 50.0f;
     self.contentViewContainer = [[UIView alloc] init];
     [self.view addSubview:self.contentViewContainer];
     
-    self.tabBarView = [[UIView alloc] init];
+    self.tabBarView = [[YQTabBarView alloc] initWithItemCount:self.indexCount];
+    
+    self.tabBarView.backgroundColor = [UIColor orangeColor];
+    self.tabBarView.delegate = self.tabBarViewDelegate;
+    [self.tabBarView loadItems];
+    
     [self.view addSubview:self.tabBarView];
     
     [self.contentViewContainer setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -101,7 +112,12 @@ static CGFloat YQTabBarHieght = 50.0f;
     
     NSArray *constraint_three_array = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(0)-[_tabBarView]-(0)-|" options:0 metrics:nil views:viewsDic];
     [self.view addConstraints:constraint_three_array];
-    
+     
+    //添加阴影
+//    self.tabBarView.layer.shadowColor = [UIColor grayColor].CGColor;
+//    self.tabBarView.layer.shadowOffset = CGSizeMake(0, -1);
+//    self.tabBarView.layer.shadowOpacity = 1;
+//    self.tabBarView.layer.shadowRadius = 10.0f;
 
 }
 

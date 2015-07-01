@@ -27,6 +27,7 @@
 		21ED40521B146189008400D2 /* OneViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 21ED40501B146189008400D2 /* OneViewController.xib */; };
 		21ED40561B146678008400D2 /* TwoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21ED40541B146678008400D2 /* TwoViewController.m */; };
 		21ED40571B146678008400D2 /* TwoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 21ED40551B146678008400D2 /* TwoViewController.xib */; };
+		21F485961B43D21F0072EEAE /* YQTabBarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 21F485951B43D21F0072EEAE /* YQTabBarItem.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +75,8 @@
 		21ED40531B146678008400D2 /* TwoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwoViewController.h; sourceTree = "<group>"; };
 		21ED40541B146678008400D2 /* TwoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwoViewController.m; sourceTree = "<group>"; };
 		21ED40551B146678008400D2 /* TwoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TwoViewController.xib; sourceTree = "<group>"; };
+		21F485941B43D21F0072EEAE /* YQTabBarItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YQTabBarItem.h; sourceTree = "<group>"; };
+		21F485951B43D21F0072EEAE /* YQTabBarItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YQTabBarItem.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +116,8 @@
 				2184751F1B3EA38600A10741 /* YQTabBarController.m */,
 				21C01CFD1B42C66C00988936 /* YQTabBarView.h */,
 				21C01CFE1B42C66C00988936 /* YQTabBarView.m */,
+				21F485941B43D21F0072EEAE /* YQTabBarItem.h */,
+				21F485951B43D21F0072EEAE /* YQTabBarItem.m */,
 			);
 			path = YQTabBarController;
 			sourceTree = "<group>";
@@ -302,6 +307,7 @@
 				21ED404C1B145EA8008400D2 /* MainViewController.m in Sources */,
 				21B236FE1B0CADA400CF8E12 /* AppDelegate.m in Sources */,
 				218475201B3EA38600A10741 /* YQTabBarController.m in Sources */,
+				21F485961B43D21F0072EEAE /* YQTabBarItem.m in Sources */,
 				21ED40511B146189008400D2 /* OneViewController.m in Sources */,
 				2170A3A31B14897100CCDBE0 /* YQSlideMenuController.m in Sources */,
 				21B236FB1B0CADA400CF8E12 /* main.m in Sources */,
