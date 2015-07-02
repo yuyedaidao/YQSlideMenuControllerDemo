@@ -8,7 +8,6 @@
 
 #import "YQTabBarController.h"
 
-
 static CGFloat YQTabBarHieght = 50.0f;
 
 @interface YQTabBarController (){
@@ -20,6 +19,8 @@ static CGFloat YQTabBarHieght = 50.0f;
 @property (strong, nonatomic) NSArray *viewControllers;
 @property (weak, nonatomic) UIViewController *currentViewController;
 @property (assign, nonatomic) NSInteger indexCount;
+
+@property (strong, nonatomic) NSLayoutConstraint *tabBarBottomConstraint;
 @end
 
 
@@ -85,6 +86,11 @@ static CGFloat YQTabBarHieght = 50.0f;
     [super viewDidAppear:animated];
   
 }
+#pragma mark yqslidemenu currentvc
+- (UIViewController *)yq_currentViewController{
+    return self.currentViewController;
+}
+
 #pragma mark self hander
 - (void)prepareViews{
     
@@ -106,13 +112,15 @@ static CGFloat YQTabBarHieght = 50.0f;
     NSDictionary *viewsDic = NSDictionaryOfVariableBindings(self.view,_contentViewContainer,_tabBarView);
     
     NSArray *constraint_one_array = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(0)-[_contentViewContainer]-(0)-|" options:0 metrics:nil views:viewsDic];
-    NSArray *constraint_two_array = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(0)-[_contentViewContainer]-(0)-[_tabBarView(tabBarHeight)]-(0)-|" options:0 metrics:@{@"tabBarHeight":@(YQTabBarHieght)} views:viewsDic];
+    NSArray *constraint_two_array = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(0)-[_contentViewContainer]-(0)-[_tabBarView(tabBarHeight)]" options:0 metrics:@{@"tabBarHeight":@(YQTabBarHieght)} views:viewsDic];
     [self.view addConstraints:constraint_one_array];
     [self.view addConstraints:constraint_two_array];
     
     NSArray *constraint_three_array = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(0)-[_tabBarView]-(0)-|" options:0 metrics:nil views:viewsDic];
     [self.view addConstraints:constraint_three_array];
-     
+    
+    self.tabBarBottomConstraint = [NSLayoutConstraint constraintWithItem:self.tabBarView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
+    [self.view addConstraint:self.tabBarBottomConstraint];
     //添加阴影
 //    self.tabBarView.layer.shadowColor = [UIColor grayColor].CGColor;
 //    self.tabBarView.layer.shadowOffset = CGSizeMake(0, -1);
@@ -122,6 +130,32 @@ static CGFloat YQTabBarHieght = 50.0f;
 }
 
 #pragma mark open api
+- (void)showTabBarView:(BOOL)show{
+    if(show){
+        if(self.tabBarBottomConstraint.constant > 0){
+            //准备显示
+            self.tabBarBottomConstraint.constant = 0;
+            [UIView animateWithDuration:0.3 animations:^{
+                [self.view setNeedsLayout];
+                [self.view layoutIfNeeded];
+            } completion:^(BOOL finished) {
+                
+            }];
+        }
+    }else{
+        if(self.tabBarBottomConstraint.constant < CGRectGetHeight(self.tabBarView.bounds)){
+            //准备隐藏
+            self.tabBarBottomConstraint.constant = CGRectGetHeight(self.tabBarView.bounds);
+            [UIView animateWithDuration:0.3 animations:^{
+                [self.view setNeedsLayout];
+                [self.view layoutIfNeeded];
+            } completion:^(BOOL finished) {
+                
+            }];
+        }
+
+    }
+}
 - (void)selectViewControllerAtIndex:(NSInteger)index{
     NSAssert(index<self.indexCount, @"index 超出了范围");
     
@@ -154,6 +188,7 @@ static CGFloat YQTabBarHieght = 50.0f;
                 [fromViewController.view removeFromSuperview];
                 [fromViewController removeFromParentViewController];
             }
+            self.currentViewController = toViewController;
             
         }
         if(self.didSeletItemBlock){

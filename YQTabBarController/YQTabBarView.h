@@ -40,5 +40,4 @@
 - (void)loadItems;
 
 - (YQTabBarItem *)tabBarItemForIndex:(NSInteger)index;
-//- ()
 @end

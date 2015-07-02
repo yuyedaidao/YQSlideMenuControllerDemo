@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "YQTabBarView.h"
+#import "YQSlideMenuCurrentVCDelegate.h"
 
-@interface YQTabBarController : UIViewController
+@interface YQTabBarController : UIViewController<YQSlideMenuCurrentVCDelegate>
 
 - (instancetype)initWithViewControllers:(NSArray *)viewControllers;
 /**
@@ -28,4 +29,7 @@
 @property (nonatomic ,strong) void (^didSeletItemBlock)(NSInteger index);
 
 @property (nonatomic, strong) id<YQTabBarViewDelegate> tabBarViewDelegate;
+
+- (void)showTabBarView:(BOOL)show;
+
 @end

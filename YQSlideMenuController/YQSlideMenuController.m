@@ -19,6 +19,7 @@ static double const DurationAnimation = 0.3f;
 @property (nonatomic, strong) UIImageView *backgroundImageView;
 @property (nonatomic, strong) UIView *gestureRecognizerView;
 @property (nonatomic, strong) UIPanGestureRecognizer *edgePanGesture;
+@property (nonatomic, strong) UITapGestureRecognizer *backTapGesture;
 
 @property (strong, readwrite, nonatomic) IBInspectable UIColor *contentViewShadowColor;
 @property (assign, readwrite, nonatomic) IBInspectable CGSize contentViewShadowOffset;
@@ -81,7 +82,7 @@ static double const DurationAnimation = 0.3f;
     self.menuViewContainer.frame = self.view.bounds;
     self.contentViewContainer.frame = self.view.bounds;
     self.gestureRecognizerView.frame = self.view.bounds;
-    
+    self.gestureRecognizerView.hidden = YES;//一开始不隐藏的话有可能会阻止内容视图的事件
     self.menuViewContainer.backgroundColor = [UIColor clearColor];
     
     if (self.leftMenuViewController) {
@@ -109,17 +110,23 @@ static double const DurationAnimation = 0.3f;
     
     [self.contentViewContainer addSubview:self.gestureRecognizerView];
     
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognizer:)];
-    [self.gestureRecognizerView addGestureRecognizer:tap];
-    
+    self.backTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognizer:)];
+    [self.gestureRecognizerView addGestureRecognizer:self.backTapGesture];
     [self updateContentViewShadow];
     
 }
 
 - (void)showViewController:(UIViewController *)viewController{
-    NSAssert([self.contentViewController isKindOfClass:[UINavigationController class]], @"住内容视图控制器不是UINavigationController");
     
-    [((UINavigationController *)self.contentViewController) pushViewController:viewController animated:NO];
+    UIViewController *pushingVC = nil;
+    
+    if(self.currentVCDelegate && [self.currentVCDelegate respondsToSelector:@selector(yq_currentViewController)]){
+        pushingVC = [self.currentVCDelegate yq_currentViewController];
+    }else{
+        pushingVC = self.contentViewController;
+    }
+    NSAssert([pushingVC isKindOfClass:[UINavigationController class]], @"内容视图控制器不是UINavigationController");
+    [(UINavigationController *)pushingVC pushViewController:viewController animated:NO];
     [self hideMenu];
 }
 - (void)hideMenu{
@@ -266,15 +273,17 @@ static double const DurationAnimation = 0.3f;
             }
         }
     }else{
-        NSLog(@"child %@",self.contentViewController.childViewControllers );
-        if(self.contentViewController.childViewControllers.count){//这样只有在根视图控制器上起作用
-            CGPoint point = [gestureRecognizer locationInView:gestureRecognizer.view];
-            if(self.menuHidden){
-                if(point.x <= LeftMarginGesture){
+        if(self.currentVCDelegate && [self.currentVCDelegate respondsToSelector:@selector(yq_currentViewController)]){
+            //TODO:现在也只针对navigationcontroller，应该分别处理一下
+            if([self.currentVCDelegate yq_currentViewController].childViewControllers.count < 2){//这样只有在根视图控制器上起作用
+                CGPoint point = [gestureRecognizer locationInView:gestureRecognizer.view];
+                if(self.menuHidden){
+                    if(point.x <= LeftMarginGesture){
+                        return YES;
+                    }
+                }else{
                     return YES;
                 }
-            }else{
-                return YES;
             }
         }
 
@@ -283,13 +292,18 @@ static double const DurationAnimation = 0.3f;
     
     return NO;
 }
+
+///gestureRecoginzer失败了才可以执行otherGestureRecognizer
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
-    
+
     if(gestureRecognizer == self.edgePanGesture){
         return YES;
     }
     return  NO;
 }
+//- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
+//    return YES;
+//}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

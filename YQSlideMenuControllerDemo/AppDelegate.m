@@ -28,20 +28,23 @@
 //    MainViewController *contentViewController = [[MainViewController alloc] initWithNibName:@"MainViewController" bundle:nil];
    
     NSMutableArray *viewControllers = [@[] mutableCopy];
-    for (int i = 0; i<4; i++) {
+    for (int i = 0; i<3; i++) {
         MainViewController *vc = [[MainViewController alloc] initWithNibName:@"MainViewController" bundle:nil];
         vc.title = [NSString stringWithFormat:@"title %d",i];
-        [viewControllers addObject:[[UINavigationController alloc] initWithRootViewController:vc]];
+        [viewControllers addObject:vc];
     }
-    YQTabBarController *contentViewController   = [[YQTabBarController alloc] initWithViewControllers:viewControllers  reservedIndexs:@[[NSNumber numberWithInteger:2]]];
+    OneViewController *oneVC = [[OneViewController alloc] initWithNibName:@"OneViewController" bundle:nil];
+    [viewControllers addObject:oneVC];
+    YQTabBarController *contentViewController  = [[YQTabBarController alloc] initWithViewControllers:viewControllers  reservedIndexs:@[[NSNumber numberWithInteger:2]]];
     contentViewController.tabBarViewDelegate = self;
    
-//    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:contentViewController];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:contentViewController];
     LeftMenuController  *leftMenuViewController = [[LeftMenuController alloc] init];
-    YQSlideMenuController *sideMenuController = [[YQSlideMenuController alloc] initWithContentViewController:contentViewController
+    YQSlideMenuController *sideMenuController = [[YQSlideMenuController alloc] initWithContentViewController:navigationController
                                                                     leftMenuViewController:leftMenuViewController];
     sideMenuController.backgroundImage = [UIImage imageNamed:@"slide_bg"];
   
+    sideMenuController.currentVCDelegate = contentViewController;
     self.window.rootViewController = sideMenuController;
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];

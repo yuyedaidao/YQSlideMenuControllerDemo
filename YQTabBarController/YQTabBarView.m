@@ -8,8 +8,6 @@
 
 #import "YQTabBarView.h"
 
-#define LOGCMD NSLog(@"%@:%@",NSStringFromClass([self class]),NSStringFromSelector(_cmd))
-
 @interface YQTabBarView ()
 @property (nonatomic, assign) NSInteger itemCount;
 @property (nonatomic, strong) NSMutableArray *itemArray;
@@ -57,19 +55,19 @@
 }
 #pragma mark selector
 - (void)itemTouchDownAction:(YQTabBarItem *)item{
-    LOGCMD;
+
     if(self.currentItem != item){
         item.itemState = YQTabBarItemStateHighlight;
     }
 }
 - (void)itemTouchCancelAction:(YQTabBarItem *)item{
-    LOGCMD;
+
     if(self.currentItem != item){
         item.itemState = YQTabBarItemStateNormal;
     }
 }
 - (void)itemTouchUpInsideAction:(YQTabBarItem *)item{
-    LOGCMD;
+ 
     if(self.currentItem == item){
         return;
     }

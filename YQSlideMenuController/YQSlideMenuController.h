@@ -7,12 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "YQSlideMenuCurrentVCDelegate.h"
 
 @interface YQSlideMenuController : UIViewController
 
 @property (nonatomic,strong) UIViewController *leftMenuViewController;
 @property (nonatomic,strong) UIViewController *contentViewController;
 @property (nonatomic,strong) UIImage *backgroundImage;
+
+@property (nonatomic, assign) id<YQSlideMenuCurrentVCDelegate> currentVCDelegate;
 
 /**
  *  菜单打开时原来内容页露在侧边的最大宽，注意是指缩放完成之后的
