@@ -1,8 +1,8 @@
 # YQSlideMenuControllerDemo
 仿QQ左边菜单侧滑栏
 
-###先上图（gif图片较大，请耐心）
-![gif](https://github.com/yuyedaidao/YQSlideMenuControllerDemo/blob/master/slideMenu.gif)
+###先上图（已换小图）
+![gif](https://github.com/yuyedaidao/YQSlideMenuControllerDemo/blob/master/menu.gif)
 
 ###使用
 
