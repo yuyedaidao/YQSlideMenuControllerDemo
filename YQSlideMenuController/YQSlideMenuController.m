@@ -56,6 +56,7 @@ static double const DurationAnimation = 0.3f;
     _contentViewShadowRadius = 5.0f;
     _contentViewVisibleWidth = 120.0f;
 //    _realContentViewVisibleWidth = _contentViewVisibleWidth/MinScaleContentView;
+    _contentViewScale = 1.0f;
     _menuHidden = YES;
 }
 - (void)awakeFromNib{
@@ -225,6 +226,7 @@ static double const DurationAnimation = 0.3f;
             self.contentViewContainer.transform = CGAffineTransformMakeTranslation(self.view.bounds.size.width-self.realContentViewVisibleWidth, 0);
             self.contentViewContainer.transform = CGAffineTransformScale(self.contentViewContainer.transform,MinScaleContentView, MinScaleContentView);
             self.menuViewContainer.transform = CGAffineTransformIdentity;
+            self.contentViewScale = MinScaleContentView;
         }else{
 
             self.contentViewContainer.transform = CGAffineTransformIdentity;
