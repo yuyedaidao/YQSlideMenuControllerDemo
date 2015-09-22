@@ -261,26 +261,20 @@ static double const DurationAnimation = 0.3f;
     if(self.contentViewController.childViewControllers.count < 2){//这样只有在根视图控制器上起作用
         CGPoint point = [gestureRecognizer locationInView:gestureRecognizer.view];
         if(self.menuHidden){
-            if(point.x <= LeftMarginGesture){NSLog(@"A");
+            if(point.x <= LeftMarginGesture){
                 return YES;
-            }else{
-                NSLog(@"B");
             }
-        }else{NSLog(@"C");
+        }else{
             return YES;
         }
     }
-//    if(gestureRecognizer == self.edgePanGesture){
-//        NSLog(@"NNNNNNNNNNN------ %@",gestureRecognizer.view);
-//    }
-    return !(gestureRecognizer == self.edgePanGesture);
+    return NO;
 
 }
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
-    NSLog(@"otherGesute = %@",otherGestureRecognizer);
-    if(gestureRecognizer == self.edgePanGesture){NSLog(@"AAAA");
+    if(gestureRecognizer == self.edgePanGesture){
         return YES;
-    }NSLog(@"BBBB");
+    }
     return  NO;
 }
 - (void)didReceiveMemoryWarning {
