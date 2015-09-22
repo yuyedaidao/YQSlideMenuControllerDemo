@@ -7,7 +7,7 @@
 ###使用
 
 ####导入
-    pod 'YQSlideMenController', '~> 0.0.2'
+    pod 'YQSlideMenController'
 
 ####初始化
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
