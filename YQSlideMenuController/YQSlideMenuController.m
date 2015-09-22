@@ -257,7 +257,6 @@ static double const DurationAnimation = 0.3f;
 #pragma gesture delegate
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer{
 
-    
     if(self.contentViewController.childViewControllers.count < 2){//这样只有在根视图控制器上起作用
         CGPoint point = [gestureRecognizer locationInView:gestureRecognizer.view];
         if(self.menuHidden){
