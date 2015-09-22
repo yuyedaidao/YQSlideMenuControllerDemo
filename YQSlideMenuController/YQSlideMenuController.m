@@ -49,6 +49,7 @@ static double const DurationAnimation = 0.3f;
     _menuViewContainer = [[UIView alloc] init];
     _contentViewContainer = [[UIView alloc] init];
     _gestureRecognizerView = [[UIView alloc] init];
+    _gestureRecognizerView.hidden = YES;//Fix 150922 初始没有隐藏导致rootController上手势无法正确识别
     _gestureRecognizerView.backgroundColor = [UIColor clearColor];
     _contentViewShadowColor = [UIColor blackColor];
     _contentViewShadowOffset = CGSizeZero;
@@ -255,24 +256,31 @@ static double const DurationAnimation = 0.3f;
 
 #pragma gesture delegate
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer{
+
     
     if(self.contentViewController.childViewControllers.count < 2){//这样只有在根视图控制器上起作用
         CGPoint point = [gestureRecognizer locationInView:gestureRecognizer.view];
         if(self.menuHidden){
-            if(point.x <= LeftMarginGesture){
+            if(point.x <= LeftMarginGesture){NSLog(@"A");
                 return YES;
+            }else{
+                NSLog(@"B");
             }
-        }else{
+        }else{NSLog(@"C");
             return YES;
         }
     }
-    
-    return NO;
+//    if(gestureRecognizer == self.edgePanGesture){
+//        NSLog(@"NNNNNNNNNNN------ %@",gestureRecognizer.view);
+//    }
+    return !(gestureRecognizer == self.edgePanGesture);
+
 }
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
-    if(gestureRecognizer == self.edgePanGesture){
+    NSLog(@"otherGesute = %@",otherGestureRecognizer);
+    if(gestureRecognizer == self.edgePanGesture){NSLog(@"AAAA");
         return YES;
-    }
+    }NSLog(@"BBBB");
     return  NO;
 }
 - (void)didReceiveMemoryWarning {
