@@ -49,24 +49,22 @@ static double const DurationAnimation = 0.3f;
     _menuViewContainer = [[UIView alloc] init];
     _contentViewContainer = [[UIView alloc] init];
     _gestureRecognizerView = [[UIView alloc] init];
-    _gestureRecognizerView.hidden = YES;//Fix 150922 初始没有隐藏导致rootController上手势无法正确识别
+    _gestureRecognizerView.hidden = YES;
     _gestureRecognizerView.backgroundColor = [UIColor clearColor];
     _contentViewShadowColor = [UIColor blackColor];
     _contentViewShadowOffset = CGSizeZero;
     _contentViewShadowOpacity = 0.4f;
     _contentViewShadowRadius = 5.0f;
     _contentViewVisibleWidth = 120.0f;
-//    _realContentViewVisibleWidth = _contentViewVisibleWidth/MinScaleContentView;
     _contentViewScale = 1.0f;
     _menuHidden = YES;
-}
-- (void)awakeFromNib{
-    
+    _scaleContent = YES;
+    _scaleMenu = YES;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.realContentViewVisibleWidth = self.contentViewVisibleWidth/MinScaleContentView;
+    self.realContentViewVisibleWidth = _scaleContent ? self.contentViewVisibleWidth/MinScaleContentView : self.contentViewVisibleWidth;
     // Do any additional setup after loading the view.
     self.backgroundImageView = ({
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
@@ -103,8 +101,6 @@ static double const DurationAnimation = 0.3f;
     [self.contentViewController didMoveToParentViewController:self];
     
     
-//    UIScreenEdgePanGestureRecognizer *panGesture = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureRecognizer:)];
-//    panGesture.edges = UIRectEdgeLeft;
     self.edgePanGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureRecognizer:)];
     self.edgePanGesture.delegate = self;
     [self.contentViewContainer addGestureRecognizer:self.edgePanGesture];
@@ -113,16 +109,30 @@ static double const DurationAnimation = 0.3f;
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognizer:)];
     [self.gestureRecognizerView addGestureRecognizer:tap];
-    
+
     [self updateContentViewShadow];
     
 }
 
 - (void)showViewController:(UIViewController *)viewController{
-    NSAssert([self.contentViewController isKindOfClass:[UINavigationController class]], @"住内容视图控制器不是UINavigationController");
+    if ([self.contentViewController isKindOfClass:[UINavigationController class]]) {
+        UINavigationController *nav = (UINavigationController *)self.contentViewController;
+        [nav pushViewController:viewController animated:NO];
+        [self hideMenu];
+    } else if (self.contentViewController.navigationController) {
+        [self.contentViewController.navigationController pushViewController:viewController animated:NO];
+        [self hideMenu];
+    } else {
+        NSAssert([self.contentViewController conformsToProtocol:@protocol(YQContentViewControllerDelegate)], @"ContentViewController不是UINavigationController后者ContentViewController没有UINavigationController,请在ContentViewController中实现YQContentViewControllerDelegate协议");
+        id<YQContentViewControllerDelegate> delegate = (id<YQContentViewControllerDelegate>)self.contentViewController;
+        if ([delegate respondsToSelector:@selector(yq_navigationController)]) {
+            UINavigationController *nav = [delegate yq_navigationController];
+            NSAssert([nav isKindOfClass:[UINavigationController class]], @"yq_navigationController协议方法返回的不是UINavigationController");
+            [nav pushViewController:viewController animated:NO];
+            [self hideMenu];
+        }
+    }
     
-    [((UINavigationController *)self.contentViewController) pushViewController:viewController animated:NO];
-    [self hideMenu];
 }
 - (void)hideMenu{
     if(!self.menuHidden){
@@ -143,7 +153,6 @@ static double const DurationAnimation = 0.3f;
 }
 
 #pragma custom selector
-
 - (void)tapGestureRecognizer:(UITapGestureRecognizer *)recongnizer{
     if(!self.menuHidden){
         [self hideMenu];
@@ -158,93 +167,113 @@ static double const DurationAnimation = 0.3f;
         [self updateContentViewShadow];
     }else if(recognizer.state == UIGestureRecognizerStateChanged){
         CGFloat menuVisibleWidth = self.view.bounds.size.width-self.realContentViewVisibleWidth;
-        CGFloat delta = self.menuHidden ? point.x/menuVisibleWidth : (menuVisibleWidth+point.x)/menuVisibleWidth;
-
-        CGFloat scale = 1-(1-MinScaleContentView)*delta;
-        CGFloat menuScale = MinScaleMenuView + (1-MinScaleMenuView)*delta;
-        if(self.menuHidden){
-            //以内容视图最小缩放为界限
-            if(scale < MinScaleContentView){//A
-                self.contentViewContainer.transform = CGAffineTransformMakeTranslation(menuVisibleWidth, 0);
-                self.contentViewContainer.transform = CGAffineTransformScale(self.contentViewContainer.transform,MinScaleContentView,MinScaleContentView);
-                self.contentViewScale = MinScaleContentView;
-                self.menuViewContainer.transform = CGAffineTransformMakeScale(1, 1);
-                self.menuViewContainer.transform = CGAffineTransformTranslate(self.menuViewContainer.transform, 0, 0);
-                
-            }else{//大于最小界限又分大于等于1和小于1两种情况
-               
-                if(scale < 1){//B
-                    self.contentViewContainer.transform = CGAffineTransformMakeTranslation(point.x, 0);
-                    self.contentViewContainer.transform = CGAffineTransformScale(self.contentViewContainer.transform,scale, scale);
-                    self.contentViewScale = scale;
-                    self.menuViewContainer.transform = CGAffineTransformMakeScale(menuScale, menuScale);
-                    self.menuViewContainer.transform = CGAffineTransformTranslate(self.menuViewContainer.transform, -MoveDistanceMenuView *(1-delta), 0);
-                }else{//C
-                    self.contentViewContainer.transform = CGAffineTransformMakeTranslation(0, 0);
-                    self.contentViewContainer.transform = CGAffineTransformScale(self.contentViewContainer.transform,1, 1);
-                    self.contentViewScale = 1;
-                    self.menuViewContainer.transform = CGAffineTransformMakeScale(MinScaleMenuView, MinScaleMenuView);
-                    self.menuViewContainer.transform = CGAffineTransformTranslate(self.menuViewContainer.transform, -MoveDistanceMenuView, 0);
-                }
-
-            }
-            
-        }else{
-            
-            if(scale > 1){//D
-                self.contentViewContainer.transform = CGAffineTransformMakeTranslation(0, 0);
-                self.contentViewContainer.transform = CGAffineTransformScale(self.contentViewContainer.transform,1,1);
-                self.contentViewScale = 1;
-                self.menuViewContainer.transform = CGAffineTransformMakeScale(MinScaleMenuView, MinScaleMenuView);
-                self.menuViewContainer.transform = CGAffineTransformTranslate(self.menuViewContainer.transform, -MoveDistanceMenuView, 0);
-            }else{
-                if(scale>MinScaleContentView){//E
-                    self.contentViewContainer.transform = CGAffineTransformMakeTranslation(point.x+menuVisibleWidth, 0);
-                    self.contentViewContainer.transform = CGAffineTransformScale(self.contentViewContainer.transform,scale, scale);
-                    self.contentViewScale = scale;
-                    self.menuViewContainer.transform = CGAffineTransformMakeScale(menuScale, menuScale);
-                    self.menuViewContainer.transform = CGAffineTransformTranslate(self.menuViewContainer.transform, -MoveDistanceMenuView * (1-delta), 0);
-                }else{//F
-                    self.contentViewContainer.transform =CGAffineTransformMakeTranslation(self.view.bounds.size.width-self.realContentViewVisibleWidth, 0);
-                    self.contentViewContainer.transform = CGAffineTransformScale(self.contentViewContainer.transform,MinScaleContentView, MinScaleContentView);
+        if (_scaleContent) {
+            CGFloat delta = self.menuHidden ? point.x/menuVisibleWidth : (menuVisibleWidth+point.x)/menuVisibleWidth;
+            CGFloat scale = 1-(1-MinScaleContentView)*delta;
+            CGFloat menuScale = MinScaleMenuView + (1-MinScaleMenuView)*delta;
+            if(self.menuHidden){
+                //以内容视图最小缩放为界限
+                if(scale < MinScaleContentView){//A
+                    self.contentViewContainer.transform = CGAffineTransformMakeTranslation(menuVisibleWidth, 0);
+                    self.contentViewContainer.transform = CGAffineTransformScale(self.contentViewContainer.transform,MinScaleContentView,MinScaleContentView);
                     self.contentViewScale = MinScaleContentView;
                     self.menuViewContainer.transform = CGAffineTransformMakeScale(1, 1);
                     self.menuViewContainer.transform = CGAffineTransformTranslate(self.menuViewContainer.transform, 0, 0);
+                    
+                }else{//大于最小界限又分大于等于1和小于1两种情况
+                   
+                    if(scale < 1){//B
+                        self.contentViewContainer.transform = CGAffineTransformMakeTranslation(point.x, 0);
+                        self.contentViewContainer.transform = CGAffineTransformScale(self.contentViewContainer.transform,scale, scale);
+                        self.contentViewScale = scale;
+                        self.menuViewContainer.transform = CGAffineTransformMakeScale(menuScale, menuScale);
+                        self.menuViewContainer.transform = CGAffineTransformTranslate(self.menuViewContainer.transform, -MoveDistanceMenuView *(1-delta), 0);
+                    }else{//C
+                        self.contentViewContainer.transform = CGAffineTransformMakeTranslation(0, 0);
+                        self.contentViewContainer.transform = CGAffineTransformScale(self.contentViewContainer.transform,1, 1);
+                        self.contentViewScale = 1;
+                        self.menuViewContainer.transform = CGAffineTransformMakeScale(MinScaleMenuView, MinScaleMenuView);
+                        self.menuViewContainer.transform = CGAffineTransformTranslate(self.menuViewContainer.transform, -MoveDistanceMenuView, 0);
+                    }
+
+                }
+                
+            }else{
+                
+                if(scale > 1){//D
+                    self.contentViewContainer.transform = CGAffineTransformMakeTranslation(0, 0);
+                    self.contentViewContainer.transform = CGAffineTransformScale(self.contentViewContainer.transform,1,1);
+                    self.contentViewScale = 1;
+                    self.menuViewContainer.transform = CGAffineTransformMakeScale(MinScaleMenuView, MinScaleMenuView);
+                    self.menuViewContainer.transform = CGAffineTransformTranslate(self.menuViewContainer.transform, -MoveDistanceMenuView, 0);
+                }else{
+                    if(scale>MinScaleContentView){//E
+                        self.contentViewContainer.transform = CGAffineTransformMakeTranslation(point.x+menuVisibleWidth, 0);
+                        self.contentViewContainer.transform = CGAffineTransformScale(self.contentViewContainer.transform,scale, scale);
+                        self.contentViewScale = scale;
+                        self.menuViewContainer.transform = CGAffineTransformMakeScale(menuScale, menuScale);
+                        self.menuViewContainer.transform = CGAffineTransformTranslate(self.menuViewContainer.transform, -MoveDistanceMenuView * (1-delta), 0);
+                    }else{//F
+                        self.contentViewContainer.transform =CGAffineTransformMakeTranslation(self.view.bounds.size.width-self.realContentViewVisibleWidth, 0);
+                        self.contentViewContainer.transform = CGAffineTransformScale(self.contentViewContainer.transform,MinScaleContentView, MinScaleContentView);
+                        self.contentViewScale = MinScaleContentView;
+                        self.menuViewContainer.transform = CGAffineTransformMakeScale(1, 1);
+                        self.menuViewContainer.transform = CGAffineTransformTranslate(self.menuViewContainer.transform, 0, 0);
+                    }
                 }
             }
+        } else {
+            CGRect frame = self.contentViewContainer.frame;
+            if ((frame.origin.x + point.x) > menuVisibleWidth){
+                frame.origin.x = menuVisibleWidth;
+            } else {
+                frame.origin.x += point.x;
+            }
+            self.contentViewContainer.frame = frame;
+            [recognizer setTranslation:CGPointZero inView:self.view];
         }
         
     }else if(recognizer.state == UIGestureRecognizerStateEnded){
-//        [self showMenu:(self.contentViewContainer.frame.origin.x > self.view.bounds.size.width/2)];
-        [self showMenu:(self.contentViewScale < 1-(1-MinScaleContentView)/2)];
+
+        [self showMenu: _scaleContent ? (self.contentViewScale < 1 - (1 - MinScaleContentView) / 2) : self.contentViewContainer.frame.origin.x > (self.view.bounds.size.width - self.realContentViewVisibleWidth) / 2];
     }
 }
 - (void)showMenu:(BOOL)show{
-    NSTimeInterval duration  = show ? (self.contentViewScale-MinScaleContentView)/(1-MinScaleContentView)*DurationAnimation : (1 - (self.contentViewScale-MinScaleContentView)/(1-MinScaleContentView))*DurationAnimation;
-    
-    [UIView animateWithDuration:duration animations:^{
-        if(show){
-            self.contentViewContainer.transform = CGAffineTransformMakeTranslation(self.view.bounds.size.width-self.realContentViewVisibleWidth, 0);
-            self.contentViewContainer.transform = CGAffineTransformScale(self.contentViewContainer.transform,MinScaleContentView, MinScaleContentView);
-            self.menuViewContainer.transform = CGAffineTransformIdentity;
-            self.contentViewScale = MinScaleContentView;
-        }else{
-
-            self.contentViewContainer.transform = CGAffineTransformIdentity;
-            self.contentViewScale = 1;
-            self.menuViewContainer.transform = CGAffineTransformMakeScale(MinScaleMenuView, MinScaleMenuView);
-            self.menuViewContainer.transform = CGAffineTransformTranslate(self.menuViewContainer.transform, -MoveDistanceMenuView, 0);
-        }
-    } completion:^(BOOL finished) {
-        self.menuHidden = !show;
-        self.gestureRecognizerView.hidden = !show;
-    }];
+    if (_scaleContent) {
+        NSTimeInterval duration  = show ? (self.contentViewScale-MinScaleContentView)/(1-MinScaleContentView)*DurationAnimation : (1 - (self.contentViewScale-MinScaleContentView)/(1-MinScaleContentView))*DurationAnimation;
+        
+        [UIView animateWithDuration:duration animations:^{
+            if(show){
+                self.contentViewContainer.transform = CGAffineTransformMakeTranslation(self.view.bounds.size.width-self.realContentViewVisibleWidth, 0);
+                self.contentViewContainer.transform = CGAffineTransformScale(self.contentViewContainer.transform,MinScaleContentView, MinScaleContentView);
+                self.menuViewContainer.transform = CGAffineTransformIdentity;
+                self.contentViewScale = MinScaleContentView;
+            }else{
+                self.contentViewContainer.transform = CGAffineTransformIdentity;
+                self.contentViewScale = 1;
+                self.menuViewContainer.transform = CGAffineTransformMakeScale(MinScaleMenuView, MinScaleMenuView);
+                self.menuViewContainer.transform = CGAffineTransformTranslate(self.menuViewContainer.transform, -MoveDistanceMenuView, 0);
+            }
+        } completion:^(BOOL finished) {
+            self.menuHidden = !show;
+            self.gestureRecognizerView.hidden = !show;
+        }];
+    } else {
+        CGFloat menuWidth = self.view.bounds.size.width - self.realContentViewVisibleWidth;
+        NSTimeInterval duration = (show ? (menuWidth - self.contentViewContainer.frame.origin.x) / menuWidth : self.contentViewContainer.frame.origin.x / menuWidth) * DurationAnimation;
+        [UIView animateWithDuration:duration animations:^{
+            CGRect frame = self.contentViewContainer.frame;
+            frame.origin.x =  show ? self.view.bounds.size.width - self.realContentViewVisibleWidth : 0;
+            self.contentViewContainer.frame = frame;
+        } completion:^(BOOL finished) {
+            self.menuHidden = !show;
+            self.gestureRecognizerView.hidden = !show;
+        }];
+    }
 }
 
 #pragma method assist
-- (void)updateContentViewShadow
-{
-   
+- (void)updateContentViewShadow {
     CALayer *layer = self.contentViewContainer.layer;
     UIBezierPath *path = [UIBezierPath bezierPathWithRect:layer.bounds];
     layer.shadowPath = path.CGPath;
