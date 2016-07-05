@@ -59,7 +59,6 @@ static double const DurationAnimation = 0.3f;
     _contentViewScale = 1.0f;
     _menuHidden = YES;
     _scaleContent = YES;
-    _scaleMenu = YES;
 }
 
 - (void)viewDidLoad {
@@ -229,6 +228,7 @@ static double const DurationAnimation = 0.3f;
             } else {
                 frame.origin.x += point.x;
             }
+            self.menuViewContainer.transform = CGAffineTransformMakeTranslation((1 - frame.origin.x / menuVisibleWidth) * (-menuVisibleWidth / 3), 0);
             self.contentViewContainer.frame = frame;
             [recognizer setTranslation:CGPointZero inView:self.view];
         }
@@ -265,6 +265,7 @@ static double const DurationAnimation = 0.3f;
             CGRect frame = self.contentViewContainer.frame;
             frame.origin.x =  show ? self.view.bounds.size.width - self.realContentViewVisibleWidth : 0;
             self.contentViewContainer.frame = frame;
+            self.menuViewContainer.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeTranslation(-menuWidth / 3, 0);
         } completion:^(BOOL finished) {
             self.menuHidden = !show;
             self.gestureRecognizerView.hidden = !show;

@@ -21,10 +21,7 @@
  *  是否缩放内容视图 默认YES
  */
 @property (nonatomic, assign) IBInspectable BOOL scaleContent;
-/**
- *  是否缩放菜单视图 默认YES
- */
-@property (nonatomic, assign) BOOL scaleMenu;
+
 /**
  *  菜单打开时原来内容页露在侧边的最大宽， 如果有缩放则指缩放完成之后的
  */
