@@ -118,9 +118,6 @@ static double const DurationAnimation = 0.3f;
         UINavigationController *nav = (UINavigationController *)self.contentViewController;
         [nav pushViewController:viewController animated:NO];
         [self hideMenu];
-    } else if (self.contentViewController.navigationController) {
-        [self.contentViewController.navigationController pushViewController:viewController animated:NO];
-        [self hideMenu];
     } else {
         NSAssert([self.contentViewController conformsToProtocol:@protocol(YQContentViewControllerDelegate)], @"ContentViewController不是UINavigationController后者ContentViewController没有UINavigationController,请在ContentViewController中实现YQContentViewControllerDelegate协议");
         id<YQContentViewControllerDelegate> delegate = (id<YQContentViewControllerDelegate>)self.contentViewController;
@@ -223,8 +220,11 @@ static double const DurationAnimation = 0.3f;
             }
         } else {
             CGRect frame = self.contentViewContainer.frame;
-            if ((frame.origin.x + point.x) > menuVisibleWidth){
+            CGFloat originX = frame.origin.x + point.x;
+            if (originX > menuVisibleWidth){
                 frame.origin.x = menuVisibleWidth;
+            } else if(originX < 0) {
+                frame.origin.x = 0;
             } else {
                 frame.origin.x += point.x;
             }
@@ -286,19 +286,28 @@ static double const DurationAnimation = 0.3f;
 
 #pragma gesture delegate
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer{
-
-    if(self.contentViewController.childViewControllers.count < 2){//这样只有在根视图控制器上起作用
-        CGPoint point = [gestureRecognizer locationInView:gestureRecognizer.view];
-        if(self.menuHidden){
-            if(point.x <= LeftMarginGesture){
+    CGPoint point = [gestureRecognizer locationInView:gestureRecognizer.view];
+    if (self.menuHidden){
+        if (point.x <= LeftMarginGesture){
+            UINavigationController *nav = nil;
+            if ([self.contentViewController isKindOfClass:[UINavigationController class]] ) {
+                nav = (UINavigationController *)self.contentViewController;
+            } else if ([self.contentViewController conformsToProtocol:@protocol(YQContentViewControllerDelegate)]) {
+                id<YQContentViewControllerDelegate> delegate = (id<YQContentViewControllerDelegate>)self.contentViewController;
+                nav = [delegate yq_navigationController];
+            }
+            if (nav) {
+                if (nav.childViewControllers.count < 2) {
+                    return YES;
+                }
+            } else {
                 return YES;
             }
-        }else{
-            return YES;
         }
+    }else{
+        return YES;
     }
     return NO;
-
 }
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
     if(gestureRecognizer == self.edgePanGesture){
