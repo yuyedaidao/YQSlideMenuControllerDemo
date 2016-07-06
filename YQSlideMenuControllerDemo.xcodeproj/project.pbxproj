@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		21535ADB1D2D32D100A8FD29 /* TabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21535ADA1D2D32D100A8FD29 /* TabBarController.m */; };
 		2170A3A21B14897100CCDBE0 /* UIViewController+YQSlideMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 2170A39E1B14897100CCDBE0 /* UIViewController+YQSlideMenu.m */; };
 		2170A3A31B14897100CCDBE0 /* YQSlideMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2170A3A01B14897100CCDBE0 /* YQSlideMenuController.m */; };
 		2170A3A41B14897100CCDBE0 /* YQSlideMenuImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2170A3A11B14897100CCDBE0 /* YQSlideMenuImages.xcassets */; };
@@ -38,6 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		21535AD91D2D32D100A8FD29 /* TabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarController.h; sourceTree = "<group>"; };
+		21535ADA1D2D32D100A8FD29 /* TabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarController.m; sourceTree = "<group>"; };
 		2170A39D1B14897100CCDBE0 /* UIViewController+YQSlideMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+YQSlideMenu.h"; sourceTree = "<group>"; };
 		2170A39E1B14897100CCDBE0 /* UIViewController+YQSlideMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+YQSlideMenu.m"; sourceTree = "<group>"; };
 		2170A39F1B14897100CCDBE0 /* YQSlideMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YQSlideMenuController.h; sourceTree = "<group>"; };
@@ -142,6 +145,8 @@
 				21ED40531B146678008400D2 /* TwoViewController.h */,
 				21ED40541B146678008400D2 /* TwoViewController.m */,
 				21ED40551B146678008400D2 /* TwoViewController.xib */,
+				21535AD91D2D32D100A8FD29 /* TabBarController.h */,
+				21535ADA1D2D32D100A8FD29 /* TabBarController.m */,
 			);
 			path = YQSlideMenuControllerDemo;
 			sourceTree = "<group>";
@@ -284,6 +289,7 @@
 				21B236FE1B0CADA400CF8E12 /* AppDelegate.m in Sources */,
 				21ED40511B146189008400D2 /* OneViewController.m in Sources */,
 				2170A3A31B14897100CCDBE0 /* YQSlideMenuController.m in Sources */,
+				21535ADB1D2D32D100A8FD29 /* TabBarController.m in Sources */,
 				21B236FB1B0CADA400CF8E12 /* main.m in Sources */,
 				21ED40561B146678008400D2 /* TwoViewController.m in Sources */,
 			);

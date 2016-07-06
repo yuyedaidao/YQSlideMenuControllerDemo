@@ -11,6 +11,7 @@
 #import "LeftMenuController.h"
 #import "MainViewController.h"
 #import "OneViewController.h"
+#import "TabBarController.h"
 
 @interface AppDelegate ()
 
@@ -23,10 +24,9 @@
 
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    MainViewController *contentViewController = [[MainViewController alloc] initWithNibName:@"MainViewController" bundle:nil];
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:contentViewController];
+    TabBarController *contentViewController = [[TabBarController alloc] init];
     LeftMenuController  *leftMenuViewController = [[LeftMenuController alloc] init];
-    YQSlideMenuController *sideMenuController = [[YQSlideMenuController alloc] initWithContentViewController:navigationController
+    YQSlideMenuController *sideMenuController = [[YQSlideMenuController alloc] initWithContentViewController:contentViewController
                                                                     leftMenuViewController:leftMenuViewController];
     sideMenuController.backgroundImage = [UIImage imageNamed:@"slide_bg"];
     sideMenuController.scaleContent = NO;
