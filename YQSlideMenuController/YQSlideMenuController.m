@@ -289,18 +289,14 @@ static double const DurationAnimation = 0.3f;
     CGPoint point = [gestureRecognizer locationInView:gestureRecognizer.view];
     if (self.menuHidden){
         if (point.x <= LeftMarginGesture){
-            NSLog(@"满足条件");
             UINavigationController *nav = nil;
             if ([self.contentViewController isKindOfClass:[UINavigationController class]] ) {
                 nav = (UINavigationController *)self.contentViewController;
-                NSLog(@"nav class");
             } else if ([self.contentViewController conformsToProtocol:@protocol(YQContentViewControllerDelegate)]) {
                 id<YQContentViewControllerDelegate> delegate = (id<YQContentViewControllerDelegate>)self.contentViewController;
                 nav = [delegate yq_navigationController];
-                NSLog(@"delegate :%@",nav);
             }
             if (nav) {
-                NSLog(@"nav :: %@",nav);
                 if (nav.childViewControllers.count < 2) {
                     return YES;
                 }
