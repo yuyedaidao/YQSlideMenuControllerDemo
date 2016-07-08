@@ -16,7 +16,6 @@
 
 @property (nonatomic, strong) UIViewController *leftMenuViewController;
 @property (nonatomic, strong) UIViewController *contentViewController;
-@property (nonatomic, strong) UIImage *backgroundImage;
 /**
  *  是否缩放内容视图 默认YES
  */

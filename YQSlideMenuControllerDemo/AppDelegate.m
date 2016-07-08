@@ -28,7 +28,6 @@
     LeftMenuController  *leftMenuViewController = [[LeftMenuController alloc] init];
     YQSlideMenuController *sideMenuController = [[YQSlideMenuController alloc] initWithContentViewController:contentViewController
                                                                     leftMenuViewController:leftMenuViewController];
-    sideMenuController.backgroundImage = [UIImage imageNamed:@"slide_bg"];
     sideMenuController.scaleContent = NO;
     self.window.rootViewController = sideMenuController;
     self.window.backgroundColor = [UIColor whiteColor];

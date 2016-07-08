@@ -16,7 +16,6 @@ static double const DurationAnimation = 0.3f;
 @interface YQSlideMenuController ()<UIGestureRecognizerDelegate>
 @property (nonatomic, strong) UIView *menuViewContainer;
 @property (nonatomic, strong) UIView *contentViewContainer;
-@property (nonatomic, strong) UIImageView *backgroundImageView;
 @property (nonatomic, strong) UIView *gestureRecognizerView;
 @property (nonatomic, strong) UIPanGestureRecognizer *edgePanGesture;
 
@@ -64,24 +63,12 @@ static double const DurationAnimation = 0.3f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.realContentViewVisibleWidth = _scaleContent ? self.contentViewVisibleWidth/MinScaleContentView : self.contentViewVisibleWidth;
-    // Do any additional setup after loading the view.
-    self.backgroundImageView = ({
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
-        imageView.image = self.backgroundImage;
-        imageView.contentMode = UIViewContentModeScaleAspectFill;
-        imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        imageView;
-    });
-    
-    [self.view addSubview:self.backgroundImageView];
     [self.view addSubview:self.menuViewContainer];
     [self.view addSubview:self.contentViewContainer];
     
     self.menuViewContainer.frame = self.view.bounds;
     self.contentViewContainer.frame = self.view.bounds;
     self.gestureRecognizerView.frame = self.view.bounds;
-    
-    self.menuViewContainer.backgroundColor = [UIColor clearColor];
     
     if (self.leftMenuViewController) {
         [self addChildViewController:self.leftMenuViewController];
@@ -138,13 +125,6 @@ static double const DurationAnimation = 0.3f;
 - (void)showMenu{
     if(self.menuHidden){
         [self showMenu:YES];
-    }
-}
-#pragma method overwrite
-- (void)setBackgroundImage:(UIImage *)backgroundImage{
-    if(_backgroundImage != backgroundImage){
-        _backgroundImage = backgroundImage;
-        self.backgroundImageView.image = backgroundImage;
     }
 }
 
