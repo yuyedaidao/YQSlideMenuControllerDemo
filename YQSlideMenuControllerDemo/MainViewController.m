@@ -18,7 +18,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.title =@"Main";
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithTitle:@"Next" style:UIBarButtonItemStylePlain target:self action:@selector(push:)];
     self.navigationItem.rightBarButtonItem = rightItem;
 //    UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];

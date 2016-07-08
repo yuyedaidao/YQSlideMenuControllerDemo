@@ -20,10 +20,13 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     MainViewController *contentViewController = [[MainViewController alloc] initWithNibName:@"MainViewController" bundle:nil];
+    contentViewController.title = @"one";
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:contentViewController];
     MainViewController *contentViewController1 = [[MainViewController alloc] initWithNibName:@"MainViewController" bundle:nil];
+    contentViewController1.title = @"two";
     UINavigationController *navigationController1 = [[UINavigationController alloc] initWithRootViewController:contentViewController1];
     MainViewController *contentViewController2 = [[MainViewController alloc] initWithNibName:@"MainViewController" bundle:nil];
+    contentViewController2.title = @"three";
     UINavigationController *navigationController2 = [[UINavigationController alloc] initWithRootViewController:contentViewController2];
     self.viewControllers = @[navigationController,navigationController1,navigationController2];
 }
