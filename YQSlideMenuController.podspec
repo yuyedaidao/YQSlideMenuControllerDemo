@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "YQSlideMenuController"
-  s.version      = "0.0.9"
+  s.version      = "0.1.0"
   s.summary      = "模仿QQ左边侧滑菜单，简单好用"
 
   s.description  = <<-DESC
@@ -78,7 +78,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "https://github.com/yuyedaidao/YQSlideMenuControllerDemo.git", :tag => "0.0.9" }
+  s.source       = { :git => "https://github.com/yuyedaidao/YQSlideMenuControllerDemo.git", :tag => "0.1.0" }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
