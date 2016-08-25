@@ -25,6 +25,10 @@
  *  菜单打开时原来内容页露在侧边的最大宽， 如果有缩放则指缩放完成之后的
  */
 @property (nonatomic,assign) CGFloat contentViewVisibleWidth;
+/**
+ *  允许旋转 默认为NO
+ */
+@property (assign, nonatomic) BOOL allowRotate;
 
 - (id)initWithContentViewController:(UIViewController *)contentViewController
              leftMenuViewController:(UIViewController *)leftMenuViewController;

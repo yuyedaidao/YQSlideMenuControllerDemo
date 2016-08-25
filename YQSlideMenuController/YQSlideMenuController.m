@@ -299,10 +299,18 @@ static double const DurationAnimation = 0.3f;
     }
     return  NO;
 }
+
+#pragma mark override
+- (BOOL)shouldAutorotate {
+    return _allowRotate;
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
 
 /*
 #pragma mark - Navigation
