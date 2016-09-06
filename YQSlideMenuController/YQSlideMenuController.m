@@ -225,7 +225,10 @@ static double const DurationAnimation = 0.3f;
 - (void)showMenu:(BOOL)show{
     if (_scaleContent) {
         NSTimeInterval duration  = show ? (self.contentViewScale-MinScaleContentView)/(1-MinScaleContentView)*DurationAnimation : (1 - (self.contentViewScale-MinScaleContentView)/(1-MinScaleContentView))*DurationAnimation;
-        
+        if (show) { //for first
+            self.menuViewContainer.transform = CGAffineTransformMakeScale(MinScaleMenuView, MinScaleMenuView);
+            self.menuViewContainer.transform = CGAffineTransformTranslate(self.menuViewContainer.transform, -MoveDistanceMenuView, 0);
+        }
         [UIView animateWithDuration:duration animations:^{
             if(show){
                 self.contentViewContainer.transform = CGAffineTransformMakeTranslation(self.view.bounds.size.width-self.realContentViewVisibleWidth, 0);
