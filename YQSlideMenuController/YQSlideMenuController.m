@@ -13,6 +13,7 @@ static CGFloat const MinScaleContentView = 0.8f;
 static CGFloat const MoveDistanceMenuView = 100.0f;
 static CGFloat const MinScaleMenuView = 0.8f;
 static double const DurationAnimation = 0.3f;
+static CGFloat const MinTrigerSpeed = 1000.0f;
 @interface YQSlideMenuController ()<UIGestureRecognizerDelegate>
 @property (nonatomic, strong) UIView *menuViewContainer;
 @property (nonatomic, strong) UIView *contentViewContainer;
@@ -138,7 +139,12 @@ static double const DurationAnimation = 0.3f;
 
 - (void)panGestureRecognizer:(UIPanGestureRecognizer *)recognizer{
     CGPoint point = [recognizer translationInView:self.view];
-    
+    CGFloat velocityX = [recognizer velocityInView:self.view].x;
+    if (velocityX > MinTrigerSpeed) {
+        [self showMenu:YES];
+    } else if (velocityX < -MinTrigerSpeed) {
+        [self showMenu:NO];
+    }
     if (recognizer.state == UIGestureRecognizerStateBegan) {
         self.menuMoving = YES;
         [self updateContentViewShadow];
