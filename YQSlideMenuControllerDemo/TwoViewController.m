@@ -24,6 +24,12 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (NSArray <id <UIPreviewActionItem>> *)previewActionItems {
+    UIPreviewAction *action = [UIPreviewAction actionWithTitle:@"哈哈" style:UIPreviewActionStyleDestructive handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
+        NSLog(@"什么也不干");
+    }];
+    return @[action];
+}
 /*
 #pragma mark - Navigation
 

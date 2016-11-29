@@ -16,6 +16,9 @@ static double const DurationAnimation = 0.3f;
 @interface YQSlideMenuController ()<UIGestureRecognizerDelegate>
 @property (nonatomic, strong) UIView *menuViewContainer;
 @property (nonatomic, strong) UIView *contentViewContainer;
+/**
+ <#Description#>
+ */
 @property (nonatomic, strong) UIView *gestureRecognizerView;
 @property (nonatomic, strong) UIPanGestureRecognizer *edgePanGesture;
 
@@ -294,11 +297,22 @@ static double const DurationAnimation = 0.3f;
     return NO;
 }
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
+    if ([otherGestureRecognizer isKindOfClass:NSClassFromString(@"_UIPreviewGestureRecognizer")]) {//立即执行otherGestureRecognizer
+        return NO;
+    }
     if(gestureRecognizer == self.edgePanGesture){
         return YES;
     }
     return  NO;
 }
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    if ([otherGestureRecognizer isKindOfClass:NSClassFromString(@"_UIRevealGestureRecognizer")]) {
+        return YES;
+    }
+    return NO;
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

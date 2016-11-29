@@ -7,8 +7,9 @@
 //
 
 #import "OneViewController.h"
+#import "TwoViewController.h"
 
-@interface OneViewController ()
+@interface OneViewController ()<UIViewControllerPreviewingDelegate>
 
 @end
 
@@ -22,10 +23,18 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-
+    
     if(self.presentingViewController){
         UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismiss:)];
         self.navigationItem.rightBarButtonItem = rightItem;
+    }
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:NSStringFromClass([UITableViewCell class])];
+    if  ([[UIDevice currentDevice].systemVersion floatValue] >= 9.0) {
+        if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
+            [self registerForPreviewingWithDelegate:self sourceView:self.tableView];
+        }
     }
 }
 - (void)dismiss:(id)sender{
@@ -38,27 +47,30 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+    return 20;
 }
 
-/*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([UITableViewCell class]) forIndexPath:indexPath];
+    cell.textLabel.text = [NSString stringWithFormat:@"Title %ld",indexPath.row];
     return cell;
 }
-*/
+
+#pragma mark -3D Touch
+
+-  (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
+    [self.navigationController pushViewController:viewControllerToCommit animated:YES];
+}
+
+- (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location {
+    TwoViewController *two = [[TwoViewController alloc] initWithNibName:@"TwoViewController" bundle:nil];
+    two.title = @"二汪";
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath: [self.tableView indexPathForRowAtPoint:location]];
+    [previewingContext setSourceRect:cell.frame];
+    return two;
+}
+
 
 /*
 // Override to support conditional editing of the table view.
