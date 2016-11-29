@@ -97,7 +97,6 @@ static double const DurationAnimation = 0.3f;
 
     [self updateContentViewShadow];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActiveNotification:) name:UIApplicationWillResignActiveNotification object:nil];
     
 }
 
@@ -131,25 +130,20 @@ static double const DurationAnimation = 0.3f;
 
 #pragma custom selector
 
-- (void)applicationWillResignActiveNotification:(NSNotification *)notification {
-        //判断当前位置，根据位置
-    
-}
-
 - (void)tapGestureRecognizer:(UITapGestureRecognizer *)recongnizer{
     if(!self.menuHidden){
         [self hideMenu];
     }
 }
 
-- (void)panGestureRecognizer:(UIScreenEdgePanGestureRecognizer *)recognizer{
-    
+- (void)panGestureRecognizer:(UIPanGestureRecognizer *)recognizer{
     CGPoint point = [recognizer translationInView:self.view];
     
     if (recognizer.state == UIGestureRecognizerStateBegan) {
         self.menuMoving = YES;
         [self updateContentViewShadow];
     }else if(recognizer.state == UIGestureRecognizerStateChanged){
+    
         CGFloat menuVisibleWidth = self.view.bounds.size.width-self.realContentViewVisibleWidth;
         if (_scaleContent) {
             CGFloat delta = self.menuHidden ? point.x/menuVisibleWidth : (menuVisibleWidth+point.x)/menuVisibleWidth;
