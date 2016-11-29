@@ -9,6 +9,7 @@
 #import "TwoViewController.h"
 
 @interface TwoViewController ()
+@property (weak, nonatomic) IBOutlet UIImageView *imgView;
 
 @end
 
@@ -17,11 +18,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    UILongPressGestureRecognizer *pressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressGestureAction:)];
+    [self.view addGestureRecognizer:pressGesture];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)longPressGestureAction:(UILongPressGestureRecognizer *)gesture {
+    if (gesture.state == UIGestureRecognizerStateBegan) {
+        self.imgView.image = [UIImage imageNamed:@"dog2"];
+    } else if (gesture.state == UIGestureRecognizerStateEnded){
+        self.imgView.image = [UIImage imageNamed:@"dog"];
+    }
 }
 
 - (NSArray <id <UIPreviewActionItem>> *)previewActionItems {
@@ -30,6 +36,12 @@
     }];
     return @[action];
 }
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
 /*
 #pragma mark - Navigation
 

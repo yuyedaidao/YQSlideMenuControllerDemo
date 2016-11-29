@@ -226,7 +226,7 @@
 				TargetAttributes = {
 					21B236F41B0CADA400CF8E12 = {
 						CreatedOnToolsVersion = 6.3.1;
-						DevelopmentTeam = GP4MMMES25;
+						DevelopmentTeam = 97F5F2AF3C;
 						ProvisioningStyle = Automatic;
 					};
 					21B2370D1B0CADA400CF8E12 = {
@@ -426,11 +426,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = GP4MMMES25;
+				DEVELOPMENT_TEAM = 97F5F2AF3C;
 				INFOPLIST_FILE = YQSlideMenuControllerDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.iqilu.YQSlideMenuControllerDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
@@ -439,7 +441,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = GP4MMMES25;
+				DEVELOPMENT_TEAM = 97F5F2AF3C;
 				INFOPLIST_FILE = YQSlideMenuControllerDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.iqilu.YQSlideMenuControllerDemo;
