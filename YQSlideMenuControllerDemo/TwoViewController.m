@@ -8,6 +8,28 @@
 
 #import "TwoViewController.h"
 
+@interface CopyImageView : UIImageView
+
+@end
+
+@implementation CopyImageView
+
+- (BOOL)canBecomeFirstResponder {
+    return YES;
+}
+
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender {
+    return (action == @selector(copy:));
+}
+
+- (void)copy:(id)sender {
+    UIPasteboard *pboard = [UIPasteboard generalPasteboard];
+    pboard.string = @"哈哈，复制、粘贴，拿过来就是干";
+}
+
+@end
+
+
 @interface TwoViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *imgView;
 
@@ -19,11 +41,18 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     UILongPressGestureRecognizer *pressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressGestureAction:)];
-    [self.view addGestureRecognizer:pressGesture];
+    self.imgView.userInteractionEnabled = YES;
+    [self.imgView addGestureRecognizer:pressGesture];
 }
 
 - (void)longPressGestureAction:(UILongPressGestureRecognizer *)gesture {
     if (gesture.state == UIGestureRecognizerStateBegan) {
+        [self.imgView becomeFirstResponder];
+        UIMenuItem *copyLink = [[UIMenuItem alloc] initWithTitle:@"复制"
+                                                          action:@selector(copy:)];
+        [[UIMenuController sharedMenuController] setMenuItems:[NSArray arrayWithObjects:copyLink, nil]];
+        [[UIMenuController sharedMenuController] setTargetRect:self.imgView.frame inView:self.imgView];
+        [[UIMenuController sharedMenuController] setMenuVisible:YES animated: YES];
         self.imgView.image = [UIImage imageNamed:@"dog2"];
     } else if (gesture.state == UIGestureRecognizerStateEnded){
         self.imgView.image = [UIImage imageNamed:@"dog"];

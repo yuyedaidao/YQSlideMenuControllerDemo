@@ -20,7 +20,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dog" translatesAutoresizingMaskIntoConstraints="NO" id="sJf-tI-zcI">
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dog" translatesAutoresizingMaskIntoConstraints="NO" id="sJf-tI-zcI" customClass="CopyImageView">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="长按测试" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GG3-Uk-9GP">
@@ -39,7 +39,7 @@
                 <constraint firstItem="sJf-tI-zcI" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="vlG-pA-HOj"/>
                 <constraint firstItem="sJf-tI-zcI" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="zLK-J9-vES"/>
             </constraints>
-            <point key="canvasLocation" x="-215" y="25"/>
+            <point key="canvasLocation" x="53" y="34"/>
         </view>
     </objects>
     <resources>
