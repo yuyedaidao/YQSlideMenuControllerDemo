@@ -28,8 +28,8 @@ static double const DurationAnimation = 0.3f;
 
 @property (assign, nonatomic) CGFloat contentViewScale;
 
-@property (nonatomic,assign) BOOL menuHidden;
-
+@property (assign, nonatomic) BOOL menuHidden;
+@property (assign, nonatomic) BOOL menuMoving;
 @end
 
 @implementation YQSlideMenuController
@@ -73,7 +73,6 @@ static double const DurationAnimation = 0.3f;
     if (self.leftMenuViewController) {
         [self addChildViewController:self.leftMenuViewController];
         self.leftMenuViewController.view.frame = self.view.bounds;
-        self.leftMenuViewController.view.backgroundColor = [UIColor clearColor];
         self.leftMenuViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [self.menuViewContainer addSubview:self.leftMenuViewController.view];
         [self.leftMenuViewController didMoveToParentViewController:self];
@@ -98,6 +97,7 @@ static double const DurationAnimation = 0.3f;
 
     [self updateContentViewShadow];
     
+    
 }
 
 - (void)showViewController:(UIViewController *)viewController{
@@ -118,7 +118,7 @@ static double const DurationAnimation = 0.3f;
     
 }
 - (void)hideMenu{
-    if(!self.menuHidden){
+    if(!self.menuHidden || self.menuMoving){
         [self showMenu:NO];
     }
 }
@@ -129,19 +129,21 @@ static double const DurationAnimation = 0.3f;
 }
 
 #pragma custom selector
+
 - (void)tapGestureRecognizer:(UITapGestureRecognizer *)recongnizer{
     if(!self.menuHidden){
         [self hideMenu];
     }
 }
 
-- (void)panGestureRecognizer:(UIScreenEdgePanGestureRecognizer *)recognizer{
-    
+- (void)panGestureRecognizer:(UIPanGestureRecognizer *)recognizer{
     CGPoint point = [recognizer translationInView:self.view];
     
     if (recognizer.state == UIGestureRecognizerStateBegan) {
+        self.menuMoving = YES;
         [self updateContentViewShadow];
     }else if(recognizer.state == UIGestureRecognizerStateChanged){
+    
         CGFloat menuVisibleWidth = self.view.bounds.size.width-self.realContentViewVisibleWidth;
         if (_scaleContent) {
             CGFloat delta = self.menuHidden ? point.x/menuVisibleWidth : (menuVisibleWidth+point.x)/menuVisibleWidth;
@@ -214,8 +216,11 @@ static double const DurationAnimation = 0.3f;
         }
         
     }else if(recognizer.state == UIGestureRecognizerStateEnded){
-
         [self showMenu: _scaleContent ? (self.contentViewScale < 1 - (1 - MinScaleContentView) / 2) : self.contentViewContainer.frame.origin.x > (self.view.bounds.size.width - self.realContentViewVisibleWidth) / 2];
+        self.menuMoving = NO;
+    } else if(recognizer.state == UIGestureRecognizerStateFailed || recognizer.state == UIGestureRecognizerStateCancelled) {
+        [self hideMenu];
+        self.menuMoving = NO;
     }
 }
 - (void)showMenu:(BOOL)show{
@@ -290,11 +295,22 @@ static double const DurationAnimation = 0.3f;
     return NO;
 }
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
+    if ([otherGestureRecognizer isKindOfClass:NSClassFromString(@"_UIPreviewGestureRecognizer")]) {//立即执行otherGestureRecognizer
+        return NO;
+    }
     if(gestureRecognizer == self.edgePanGesture){
         return YES;
     }
     return  NO;
 }
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    if ([otherGestureRecognizer isKindOfClass:NSClassFromString(@"_UIRevealGestureRecognizer")]) {
+        return YES;
+    }
+    return NO;
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

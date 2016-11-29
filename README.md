@@ -26,6 +26,13 @@
 ####菜单中显示新视图
     [self.slideMenuController showViewController:viewController];
     
+####任意VC中打开&关闭菜单
+    1. 导入
+        #import <UIViewController+YQSlideMenu.h>
+    2. 调用
+        [[self slideMenuController] showMenu];//打开菜单
+        [[self slideMenuController] hideMenu];//关闭菜单
+    
 **还有许多功能没有完善，有需求的客官烦请告知**
       
 
