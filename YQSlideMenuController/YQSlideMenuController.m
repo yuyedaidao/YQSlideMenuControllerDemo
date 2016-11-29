@@ -16,9 +16,6 @@ static double const DurationAnimation = 0.3f;
 @interface YQSlideMenuController ()<UIGestureRecognizerDelegate>
 @property (nonatomic, strong) UIView *menuViewContainer;
 @property (nonatomic, strong) UIView *contentViewContainer;
-/**
- <#Description#>
- */
 @property (nonatomic, strong) UIView *gestureRecognizerView;
 @property (nonatomic, strong) UIPanGestureRecognizer *edgePanGesture;
 
@@ -100,6 +97,8 @@ static double const DurationAnimation = 0.3f;
 
     [self updateContentViewShadow];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActiveNotification:) name:UIApplicationWillResignActiveNotification object:nil];
+    
 }
 
 - (void)showViewController:(UIViewController *)viewController{
@@ -131,6 +130,12 @@ static double const DurationAnimation = 0.3f;
 }
 
 #pragma custom selector
+
+- (void)applicationWillResignActiveNotification:(NSNotification *)notification {
+        //判断当前位置，根据位置
+    
+}
+
 - (void)tapGestureRecognizer:(UITapGestureRecognizer *)recongnizer{
     if(!self.menuHidden){
         [self hideMenu];
@@ -217,10 +222,9 @@ static double const DurationAnimation = 0.3f;
         }
         
     }else if(recognizer.state == UIGestureRecognizerStateEnded){
-        
         [self showMenu: _scaleContent ? (self.contentViewScale < 1 - (1 - MinScaleContentView) / 2) : self.contentViewContainer.frame.origin.x > (self.view.bounds.size.width - self.realContentViewVisibleWidth) / 2];
         self.menuMoving = NO;
-    } else if(recognizer.state == UIGestureRecognizerStateFailed || recognizer.state == UIGestureRecognizerStateChanged) {
+    } else if(recognizer.state == UIGestureRecognizerStateFailed || recognizer.state == UIGestureRecognizerStateCancelled) {
         [self hideMenu];
         self.menuMoving = NO;
     }
