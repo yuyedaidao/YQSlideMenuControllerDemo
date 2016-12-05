@@ -317,6 +317,11 @@ static CGFloat const MinTrigerSpeed = 1000.0f;
     return NO;
 }
 
+#pragma mark override
+- (BOOL)shouldAutorotate {
+    return _allowRotate;
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
