@@ -301,9 +301,6 @@ static CGFloat const MinTrigerSpeed = 1000.0f;
     return NO;
 }
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
-    if ([otherGestureRecognizer isKindOfClass:NSClassFromString(@"_UIPreviewGestureRecognizer")]) {//立即执行otherGestureRecognizer
-        return NO;
-    }
     if(gestureRecognizer == self.edgePanGesture){
         return YES;
     }
@@ -311,7 +308,7 @@ static CGFloat const MinTrigerSpeed = 1000.0f;
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-    if ([otherGestureRecognizer isKindOfClass:NSClassFromString(@"_UIRevealGestureRecognizer")]) {
+    if (gestureRecognizer == self.edgePanGesture) {
         return YES;
     }
     return NO;
