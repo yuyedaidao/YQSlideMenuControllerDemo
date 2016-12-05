@@ -314,7 +314,6 @@ static CGFloat const MinTrigerSpeed = 1000.0f;
     return NO;
 }
 
-#pragma mark override
 - (BOOL)shouldAutorotate {
     return _allowRotate;
 }
