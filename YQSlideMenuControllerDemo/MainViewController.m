@@ -9,7 +9,8 @@
 #import "MainViewController.h"
 #import "OneViewController.h"
 #import "YQSlideMenuController.h"
-@interface MainViewController ()
+@interface MainViewController ()<UITableViewDelegate, UITableViewDataSource>
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end
 
@@ -30,7 +31,8 @@
 //    animation.repeatCount = INT32_MAX;
 //    animation.duration = 3.0f;
 //    [imageView.layer addAnimation:animation forKey:@"animation"];
-    self.view.backgroundColor = [UIColor colorWithRed:arc4random()%255/255.0 green:arc4random()%255/255.0 blue:arc4random()%255/255.0 alpha:1];
+    self.tableView.backgroundColor = [UIColor colorWithRed:arc4random()%255/255.0 green:arc4random()%255/255.0 blue:arc4random()%255/255.0 alpha:1];
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:NSStringFromClass([UITableViewCell class])];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -48,6 +50,15 @@
     [self presentViewController:[[UINavigationController alloc] initWithRootViewController:one] animated:YES completion:nil];
 }
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 20;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([UITableViewCell class]) forIndexPath:indexPath];
+    cell.textLabel.text = [NSString stringWithFormat:@"Title %ld",indexPath.row];
+    return cell;
+}
 /*
 #pragma mark - Navigation
 

@@ -31,6 +31,8 @@ static CGFloat const MinTrigerSpeed = 1000.0f;
 
 @property (assign, nonatomic) BOOL menuHidden;
 @property (assign, nonatomic) BOOL menuMoving;
+
+@property (strong, nonatomic) NSArray *priorGestures;
 @end
 
 @implementation YQSlideMenuController
@@ -59,6 +61,7 @@ static CGFloat const MinTrigerSpeed = 1000.0f;
     _contentViewScale = 1.0f;
     _menuHidden = YES;
     _scaleContent = YES;
+    _priorGestures = @[[UILongPressGestureRecognizer class], NSClassFromString(@"_UIPreviewGestureRecognizer"),NSClassFromString(@"_UIRevealGestureRecognizer")];
 }
 
 - (void)viewDidLoad {
@@ -309,7 +312,14 @@ static CGFloat const MinTrigerSpeed = 1000.0f;
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
     if (gestureRecognizer == self.edgePanGesture) {
-        return YES;
+        __block bool prior = NO;
+        [self.priorGestures enumerateObjectsUsingBlock:^(Class  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([otherGestureRecognizer isKindOfClass:obj]) {
+                prior = YES;
+                *stop = YES;
+            }
+        }];
+        return prior;
     }
     return NO;
 }
