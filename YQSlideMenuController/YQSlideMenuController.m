@@ -61,7 +61,17 @@ static CGFloat const MinTrigerSpeed = 1000.0f;
     _contentViewScale = 1.0f;
     _menuHidden = YES;
     _scaleContent = YES;
-    _priorGestures = @[[UILongPressGestureRecognizer class], NSClassFromString(@"_UIPreviewGestureRecognizer"),NSClassFromString(@"_UIRevealGestureRecognizer")];
+    if ([[UIDevice currentDevice].systemVersion floatValue] >= 9) {
+        if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
+            _priorGestures = @[[UILongPressGestureRecognizer class], NSClassFromString(@"_UIPreviewGestureRecognizer"),NSClassFromString(@"_UIRevealGestureRecognizer")];
+        } else {
+            _priorGestures = @[[UILongPressGestureRecognizer class]];
+        }
+    } else {
+        _priorGestures = @[[UILongPressGestureRecognizer class]];
+    }
+    
+    
 }
 
 - (void)viewDidLoad {
