@@ -1,6 +1,5 @@
 # YQSlideMenuControllerDemo
-仿QQ左边菜单侧滑栏
-
+仿QQ左边菜单侧滑栏  Swift版在[这里](https://github.com/yuyedaidao/YQSlideMenuController.git)
 ###先上图（已换小图）
 ![gif](https://github.com/yuyedaidao/YQSlideMenuControllerDemo/blob/master/menu.gif)
 
