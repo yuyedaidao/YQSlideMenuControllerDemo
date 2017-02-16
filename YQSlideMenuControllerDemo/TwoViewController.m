@@ -7,7 +7,7 @@
 //
 
 #import "TwoViewController.h"
-
+#import "UIViewController+YQSlideMenu.h"
 @interface CopyImageView : UIImageView
 
 @end

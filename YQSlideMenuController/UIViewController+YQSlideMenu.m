@@ -9,8 +9,7 @@
 #import "UIViewController+YQSlideMenu.h"
 
 @implementation UIViewController (YQSlideMenu)
-- (YQSlideMenuController *)slideMenuController
-{
+- (YQSlideMenuController *)slideMenuController {
     UIViewController *iter = self.parentViewController;
     while (iter) {
         if ([iter isKindOfClass:[YQSlideMenuController class]]) {
@@ -23,4 +22,5 @@
     }
     return nil;
 }
+
 @end

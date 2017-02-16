@@ -14,6 +14,10 @@ static CGFloat const MoveDistanceMenuView = 100.0f;
 static CGFloat const MinScaleMenuView = 0.8f;
 static double const DurationAnimation = 0.3f;
 static CGFloat const MinTrigerSpeed = 1000.0f;
+
+NSString *const YQSlideMenuHideNotification = @"YQSlideMenuHideNotification";
+NSString *const YQSlideMenuShowNotification = @"YQSlideMenuShowNotification";
+
 @interface YQSlideMenuController ()<UIGestureRecognizerDelegate>
 @property (nonatomic, strong) UIView *menuViewContainer;
 @property (nonatomic, strong) UIView *contentViewContainer;
@@ -42,6 +46,7 @@ static CGFloat const MinTrigerSpeed = 1000.0f;
     if(self = [super init]){
         self.contentViewController = contentViewController;
         self.leftMenuViewController = leftMenuViewController;
+        _slideEnable = YES;
         [self prepare];
     }
     return self;
@@ -133,11 +138,13 @@ static CGFloat const MinTrigerSpeed = 1000.0f;
 }
 - (void)hideMenu{
     if(!self.menuHidden || self.menuMoving){
+        [[NSNotificationCenter defaultCenter] postNotificationName:YQSlideMenuHideNotification object:self];
         [self showMenu:NO];
     }
 }
 - (void)showMenu{
     if(self.menuHidden){
+        [[NSNotificationCenter defaultCenter] postNotificationName:YQSlideMenuShowNotification object:self];
         [self showMenu:YES];
     }
 }
@@ -149,6 +156,7 @@ static CGFloat const MinTrigerSpeed = 1000.0f;
         [self hideMenu];
     }
 }
+
 
 - (void)panGestureRecognizer:(UIPanGestureRecognizer *)recognizer{
     CGPoint point = [recognizer translationInView:self.view];
@@ -290,6 +298,7 @@ static CGFloat const MinTrigerSpeed = 1000.0f;
 
 #pragma gesture delegate
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer{
+    if (!self.slideEnable) return NO;
     CGPoint point = [gestureRecognizer locationInView:gestureRecognizer.view];
     if (self.menuHidden){
         if (point.x <= LeftMarginGesture){

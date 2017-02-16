@@ -8,6 +8,7 @@
 
 #import "OneViewController.h"
 #import "TwoViewController.h"
+#import "UIViewController+YQSlideMenu.h"
 
 @interface OneViewController ()<UIViewControllerPreviewingDelegate>
 
@@ -44,6 +45,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 #pragma mark - Table view data source
 

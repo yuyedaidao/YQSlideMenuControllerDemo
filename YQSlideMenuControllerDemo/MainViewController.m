@@ -9,6 +9,8 @@
 #import "MainViewController.h"
 #import "OneViewController.h"
 #import "YQSlideMenuController.h"
+#import "UIViewController+YQSlideMenu.h"
+
 @interface MainViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -34,6 +36,11 @@
     self.tableView.backgroundColor = [UIColor colorWithRed:arc4random()%255/255.0 green:arc4random()%255/255.0 blue:arc4random()%255/255.0 alpha:1];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:NSStringFromClass([UITableViewCell class])];
 }
+
+//- (void)viewWillAppear:(BOOL)animated {
+//    [super viewWillAppear:animated];
+//    self.slideMenuController.slideEnable = [self.tabBarItem.title isEqualToString:@"one"];
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

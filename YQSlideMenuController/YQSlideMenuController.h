@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+UIKIT_EXTERN NSString *const YQSlideMenuHideNotification;
+UIKIT_EXTERN NSString *const YQSlideMenuShowNotification;
+
 @protocol YQContentViewControllerDelegate <NSObject>
 - (UINavigationController *)yq_navigationController;
 @end
@@ -31,10 +34,16 @@
  */
 @property (assign, nonatomic) BOOL allowRotate;
 
+/**
+ * 是否允许滑动
+ */
+@property (assign, nonatomic) BOOL slideEnable;
+
 - (id)initWithContentViewController:(UIViewController *)contentViewController
              leftMenuViewController:(UIViewController *)leftMenuViewController;
 
 - (void)showViewController:(UIViewController *)viewController;
 - (void)hideMenu;
 - (void)showMenu;
+
 @end
