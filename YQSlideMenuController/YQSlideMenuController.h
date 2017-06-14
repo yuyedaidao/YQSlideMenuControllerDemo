@@ -30,6 +30,8 @@
  *  允许旋转 默认为NO
  */
 @property (assign, nonatomic) BOOL allowRotate;
+@property (strong, nonatomic) NSArray<NSNumber *> *autorotateToInterfaceOrientations;
+@property (assign, nonatomic) UIInterfaceOrientationMask supportedInterfaceOrientationsMask;
 
 - (id)initWithContentViewController:(UIViewController *)contentViewController
              leftMenuViewController:(UIViewController *)leftMenuViewController;

@@ -61,6 +61,7 @@ static CGFloat const MinTrigerSpeed = 1000.0f;
     _contentViewScale = 1.0f;
     _menuHidden = YES;
     _scaleContent = YES;
+    _supportedInterfaceOrientationsMask = UIInterfaceOrientationMaskAll;
     if ([[UIDevice currentDevice].systemVersion floatValue] >= 9) {
         if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
             _priorGestures = @[[UILongPressGestureRecognizer class], NSClassFromString(@"_UIPreviewGestureRecognizer"),NSClassFromString(@"_UIRevealGestureRecognizer")];
@@ -338,6 +339,17 @@ static CGFloat const MinTrigerSpeed = 1000.0f;
     return _allowRotate;
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
+    for (NSNumber *orientation in _autorotateToInterfaceOrientations) {
+        if (orientation.integerValue == toInterfaceOrientation) {
+            return YES;
+        }
+    }
+    return NO;
+}
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+    return _supportedInterfaceOrientationsMask;
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
