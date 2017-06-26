@@ -26,12 +26,9 @@
  */
 @property (nonatomic,assign) CGFloat contentViewVisibleWidth;
 
-/**
- *  允许旋转 默认为NO
- */
-@property (assign, nonatomic) BOOL allowRotate;
-@property (strong, nonatomic) NSArray<NSNumber *> *autorotateToInterfaceOrientations;
-@property (assign, nonatomic) UIInterfaceOrientationMask supportedInterfaceOrientationsMask;
+
+@property (assign, nonatomic) BOOL allowRotate DEPRECATED_ATTRIBUTE;
+
 
 - (id)initWithContentViewController:(UIViewController *)contentViewController
              leftMenuViewController:(UIViewController *)leftMenuViewController;

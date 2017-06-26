@@ -28,8 +28,7 @@
     self.dataArray = @[@"QQ钱包",@"网上营业厅",@"个性装扮",@"我的收藏"];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"reuseIdentifier"];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-   
-    
+
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.bounds.size.width, 150)];
     self.tableView.tableHeaderView = headerView;
     [self.tableView reloadData];

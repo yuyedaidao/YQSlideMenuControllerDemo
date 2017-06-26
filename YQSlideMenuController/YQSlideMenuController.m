@@ -336,19 +336,12 @@ static CGFloat const MinTrigerSpeed = 1000.0f;
 }
 
 - (BOOL)shouldAutorotate {
-    return _allowRotate;
+    return [self.contentViewController shouldAutorotate];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
-    for (NSNumber *orientation in _autorotateToInterfaceOrientations) {
-        if (orientation.integerValue == toInterfaceOrientation) {
-            return YES;
-        }
-    }
-    return NO;
-}
+
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return _supportedInterfaceOrientationsMask;
+    return [self.contentViewController supportedInterfaceOrientations];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
