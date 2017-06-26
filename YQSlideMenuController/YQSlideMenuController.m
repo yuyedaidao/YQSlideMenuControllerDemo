@@ -61,7 +61,6 @@ static CGFloat const MinTrigerSpeed = 1000.0f;
     _contentViewScale = 1.0f;
     _menuHidden = YES;
     _scaleContent = YES;
-    _supportedInterfaceOrientationsMask = UIInterfaceOrientationMaskAll;
     if ([[UIDevice currentDevice].systemVersion floatValue] >= 9) {
         if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
             _priorGestures = @[[UILongPressGestureRecognizer class], NSClassFromString(@"_UIPreviewGestureRecognizer"),NSClassFromString(@"_UIRevealGestureRecognizer")];

@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "YQSlideMenuController"
-  s.version      = "0.1.11"
+  s.version      = "0.1.12"
   s.summary      = "模仿QQ左边侧滑菜单，简单好用"
 
   s.description  = <<-DESC
